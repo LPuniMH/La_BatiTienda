@@ -9,7 +9,7 @@ const productos = [
         "precio": 15990,
         "stock": 10,
         "descripcion": "Peluche oficial, 30 cm, felpa suave, ideal para coleccionar.",
-        "imagen": "img/kuromi-peluche.jpg"
+        "imagen": "https://media.falabella.com/falabellaCL/147508046_01/w=1500,h=1500,fit=cover"
     },
     {
         "id": 2,
