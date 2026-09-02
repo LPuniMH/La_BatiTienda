@@ -129,7 +129,7 @@ const productos = [
         "precio": 13990,
         "stock": 11,
         "descripcion": "Peluche oficial, tela suave, ideal para todas las edades.",
-        "imagen": "img/peluche-pikachu.jpg"
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwBdGG8Q_Vb_xv2AVFQ3eo5Er34HuzxYGyyOoNsbG6SfRX7CQhIU-k7Ro&s=10"
     },
     {
         "id": 12,
@@ -141,7 +141,7 @@ const productos = [
         "precio": 16990,
         "stock": 8,
         "descripcion": "Peluche gris con detalles bordados, relleno hipoalergénico.",
-        "imagen": "img/peluche-totoro.jpg"
+        "imagen": "https://meeq.com.au/cdn/shop/files/67315-3176710.jpg?v=1709776394"
     },
     {
         "id": 13,
@@ -165,7 +165,7 @@ const productos = [
         "precio": 9990,
         "stock": 18,
         "descripcion": "5 llaveros acrílicos de personajes variados, doble cara.",
-        "imagen": "img/llaveros-chibi.jpg"
+        "imagen": "https://www.merakiimee.com/cdn/shop/files/IMG_20250111_114450.jpg?v=1741122614"
     },
     {
         "id": 15,
