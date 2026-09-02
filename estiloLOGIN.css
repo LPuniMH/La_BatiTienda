@@ -1,0 +1,237 @@
+body {
+    background-image: url('https://res.cloudinary.com/yhcvjnf8/image/upload/v1788290645/fondo_comic.webp'); 
+    
+    background-repeat: no-repeat; 
+    
+    background-size: cover; 
+    
+    background-position: center; 
+    
+    background-attachment: fixed; 
+    
+    background-color: #cccccc; 
+}
+
+/* ===================== */
+/* Tema Bootstrap - index.html */
+/* ===================== */
+
+.bat-navbar {
+    background-color: rgba(10, 10, 10, 0.9);
+    border-bottom: 2px solid #f5c500;
+}
+
+.bat-navbar .navbar-brand {
+    color: #f5c500;
+    font-weight: 800;
+}
+
+.bat-navbar .nav-link {
+    color: #ffffff;
+}
+
+.bat-navbar .nav-link:hover {
+    color: #f5c500;
+}
+
+.bat-btn {
+    background-color: #f5c500;
+    color: #000000;
+    font-weight: 700;
+    border: none;
+}
+
+.bat-btn:hover {
+    background-color: #ffd633;
+    color: #000000;
+}
+
+.bat-hero {
+    min-height: 60vh;
+    background-color: rgba(0, 0, 0, 0.55);
+    background-blend-mode: darken;
+}
+
+.bat-title {
+    color: #f5c500;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.bat-section-title {
+    color: #f5c500;
+    font-weight: 800;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.bat-card {
+    background-color: rgba(10, 10, 10, 0.85);
+    border: 2px solid #f5c500;
+    color: #ffffff;
+}
+
+.bat-card-img {
+    background-color: #1a1a1a;
+    max-height: 180px;
+    object-fit: contain;
+}
+
+.bat-card-footer {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-top: 1px solid #f5c500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bat-section-dark {
+    background-color: rgba(0, 0, 0, 0.65);
+}
+
+.bat-footer {
+    background-color: rgba(10, 10, 10, 0.9);
+    border-top: 2px solid #f5c500;
+}
+
+/* ===================== */
+/* Página de inicio de sesión */
+/* ===================== */
+
+.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.login-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 380px;
+    background-color: rgba(10, 10, 10, 0.85);
+    border: 3px solid #f5c500;
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 0 25px rgba(245, 197, 0, 0.4);
+    text-align: center;
+    color: #ffffff;
+    box-sizing: border-box;
+}
+
+.login-logo {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 8px;
+}
+
+.login-title {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #f5c500;
+    text-shadow: 2px 2px 0 #000;
+    margin: 8px 0 4px;
+}
+
+.login-subtitle {
+    font-size: 14px;
+    color: #cccccc;
+    margin: 0 0 24px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 13px;
+    color: #f5c500;
+    font-weight: 600;
+}
+
+.form-group input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 2px solid #333333;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+    border-color: #f5c500;
+}
+
+.form-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #cccccc;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.forgot-link,
+.signup-link {
+    color: #f5c500;
+    text-decoration: none;
+}
+
+.forgot-link:hover,
+.signup-link:hover {
+    text-decoration: underline;
+}
+
+.login-button {
+    margin-top: 4px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f5c500;
+    color: #000000;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.login-button:hover {
+    background-color: #ffd633;
+}
+
+.login-button:active {
+    transform: scale(0.98);
+}
+
+.signup-text {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #cccccc;
+}

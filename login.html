@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Iniciar Sesión</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+
+    <!--CSS BOOTSRAP-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!--CSS ESTILOS-->
+    <link rel='stylesheet' type='text/css' media='screen' href='../css/estilos.css'>
+
+</head>
+
+<body>
+    <!--Barra de Navegacion-->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Sonido Vivo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="productos.html">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contacto.html">Contacto</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-lg-auto align-items-lg-center">
+                    <li class="nav-item mt-2 mt-lg-0 me-lg-3">
+                        <a class="nav-link text-white position-relative" href="#" id="iconoCarrito">
+                            🛒
+                            <span id="contadorCarrito" class="badge rounded-pill d-none"
+                                style="position: absolute; top: 0; right: -8px; background-color: var(--acento); font-size: 0.65rem;">
+                                0
+                            </span>
+                        </a>
+                    </li>
+                    <!-- Estado: invitado (sin sesión) -->
+                    <li class="nav-item mt-2 mt-lg-0" id="navInvitado">
+                        <a class="btn btn-outline-light btn-sm rounded-pill px-3 me-lg-2" href="login.html">Iniciar
+                            sesión</a>
+                        <a class="btn btn-accent btn-sm rounded-pill px-3" href="registro.html">Registrarse</a>
+                    </li>
+
+                    <!-- Estado: con sesión iniciada (oculto por defecto) -->
+                    <li class="nav-item dropdown mt-2 mt-lg-0 d-none" id="navUsuario">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
+                            <span id="navUsuarioEmail"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" id="btnCerrarSesion">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--CONTENIDO PRINCIPAL-->
+    <main class="auth-bg">
+        <div class="auth-card">
+
+            <div class="brand">Sonido Vivo</div>
+
+            <form id="formLogin">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="recordarme">
+                    <label class="form-check-label" for="recordarme">Recordarme</label>
+                </div>
+
+                <div id="loginError" class="alert alert-danger py-2 small d-none" role="alert"></div>
+
+                <button type="submit" class="btn btn-accent">Iniciar sesión</button>
+            </form>
+
+            <p class="text-center mt-3 auth-switch">
+                ¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a>
+            </p>
+
+        </div>
+    </main>
+
+    <!--Pie de pagina-->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col md-6">
+                    <h5>SonidoVivo</h5>
+                    <p>Guitarras, Baterias, Amplificadores</p>
+                </div>
+                <div class="col md-6 text-md-end">
+                    <h5>Contacto</h5>
+                    <p class="mb-0">SonidoVivo@gmail.com</p>
+                    <p>Viña del Mar, Chile</p>
+                </div>
+                <hr>
+                <p class="text-center">&copy; 2026 SonidoVivo. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!--Carrito-->
+    <script src="../js/carrito.js"></script>
+    
+    <!--Script para autenticación-->
+    <script src="../js/auth.js"></script>
+
+    <!--Bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
