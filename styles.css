@@ -18,53 +18,10 @@ body {
     max-width: 1200px;
 }
 
-.logo-container {
-    background-color: #2a180f;
-    padding: 8px 15px;
-    transform: skewX(-10deg);
-    border-radius: 4px;
-    margin-right: 0;
-}
-
-.logo-container:hover {
-    background-color: #2a180f;
-}
-
-.logo-text-wrapper {
-    display: flex;
-    flex-direction: column;
-    transform: skewX(10deg);
-}
-
-.logo-main-line {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.logo-main {
-    color: #FFFFFF;
-    font-size: 24px;
-    font-weight: bold;
-    font-style: italic;
-    text-shadow: 2px 2px 0px #000000;
-}
-
-.logo-inline-icon {
-    height: 50px;
-    width: auto;
+.main-logo-img {
+    width: 180px;
+    height: auto;
     object-fit: contain;
-    filter: drop-shadow(2px 2px 0px #000000); 
-}
-
-.logo-sub {
-    color: #F8FAFC;
-    font-size: 18px;
-    font-weight: bold;
-    font-style: italic;
-    text-align: center;
-    letter-spacing: 1px;
-    text-shadow: 2px 2px 0px #000000;
 }
 
 .main-navigation .nav-link {
