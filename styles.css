@@ -14,3 +14,116 @@ body {
 
 /* Estilos del Header */
 
+.site-header {
+    background-color: #1A56DB;
+    padding: 10px 20px;
+    width: 100%;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    background-color: #0F172A;
+    padding: 8px 15px;
+    transform: skewX(-10deg);
+    border-radius: 4px;
+}
+
+.logo {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transform: skewX(10deg);
+}
+
+.logo-main {
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: 2px 2px 0px #000;
+}
+
+.logo-sub {
+    color: #FFFFFF;
+    font-size: 11px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.main-navigation ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.main-navigation a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+.main-navigation a.active,
+.main-navigation a:hover {
+    color: #00E5FF;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #000000;
+    display: flex;
+    align-items: center;
+}
+
+.cart-btn {
+    text-decoration: none;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #000000;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background-color: transparent;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.cart-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background-color: #E60026;
+    color: #FFFFFF;
+    font-size: 10px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
