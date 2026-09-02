@@ -9,31 +9,31 @@ const productos = [
         "precio": 15990,
         "stock": 10,
         "descripcion": "Peluche oficial, 30 cm, felpa suave, ideal para coleccionar.",
-        "imagen": "https://media.falabella.com/falabellaCL/147508046_01/w=1500,h=1500,fit=cover"
+        "imagen": "https://cl-cenco-pim-resizer.ecomm.cencosud.com/unsafe/adaptive-fit-in/3840x0/filters:quality(75)/prd-cl/product-medias/5fdbba58-0ae2-4fa4-9847-7b3d65e14191/MKA23T14QF/MKA23T14QF-1/1692235628607-MKA23T14QF-1-3.jpg"
     },
     {
         "id": 2,
         "codigo": "KU002",
-        "nombre": "Mochila Kuromi Luna Negra",
+        "nombre": "Mochila My Melody",
         "marca": "Sanrio",
         "modelo": "Escolar",
-        "categoria": "Kuromi",
+        "categoria": "Melody",
         "precio": 24990,
         "stock": 6,
         "descripcion": "Mochila con bolsillo frontal, parche bordado y correas ajustables.",
-        "imagen": "img/kuromi-mochila.jpg"
+        "imagen": "https://http2.mlstatic.com/D_NQ_NP_857623-CBT113403054403_062026-O-mochila-my-melody-de-estilo-escolar-diario-con-funda-para-po.webp"
     },
     {
         "id": 3,
         "codigo": "KU003",
-        "nombre": "Taza Kuromi Calavera",
+        "nombre": "Lampara Kuromi",
         "marca": "Sanrio",
-        "modelo": "350ml",
+        "modelo": "Lampara figura",
         "categoria": "Kuromi",
         "precio": 8990,
         "stock": 15,
-        "descripcion": "Taza de cerámica, apta para microondas, diseño exclusivo.",
-        "imagen": "img/kuromi-taza.jpg"
+        "descripcion": "Lampara recargable morada con figura de Kuromi",
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWq0uyEwLo3q93PR5CFkVGCevdQI9vXsSylUNwd7P6-ejFmjk6uhoP02lO&s=10"
     },
     {
         "id": 4,
@@ -45,31 +45,31 @@ const productos = [
         "precio": 7990,
         "stock": 12,
         "descripcion": "Tapa blanda, papel ahuesado, edición en español.",
-        "imagen": "img/manga-onepiece.jpg"
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUhn17yfiJGS-6tNXrEbKig5V9FBt2TyaNVSOZzpo5F-Lb__KpGPibyIM&s=10"
     },
     {
-        "id": 5,
-        "codigo": "MG002",
-        "nombre": "Manga Naruto Tomo 1",
-        "marca": "Shueisha",
-        "modelo": "Edición estándar",
-        "categoria": "Mangas",
-        "precio": 7490,
-        "stock": 14,
-        "descripcion": "Primer tomo de la serie, ideal para empezar la colección.",
-        "imagen": "img/manga-naruto.jpg"
+        "id": 15,
+        "codigo": "SH003",
+        "nombre": "Cómic Batman Edición Especial",
+        "marca": "DC Comics",
+        "modelo": "Tapa dura",
+        "categoria": "Superhéroes",
+        "precio": 12990,
+        "stock": 7,
+        "descripcion": "Portada variante, papel couché, 48 páginas.",
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAjQhbX8_Oe1mq8TwbZE1kcx43wPKqDCdZaamLElTy42iQwf-Anp6hQYqD&s=10"
     },
     {
         "id": 6,
         "codigo": "MG003",
-        "nombre": "Manga Dragon Ball Tomo 1",
+        "nombre": "Mangas Dragon Ball",
         "marca": "Shueisha",
         "modelo": "Edición Kanzenban",
         "categoria": "Mangas",
         "precio": 8990,
         "stock": 9,
-        "descripcion": "Edición de lujo con tapa dura y páginas a color.",
-        "imagen": "img/manga-dragonball.jpg"
+        "descripcion": "Mangas de Dragon Ball del 1-26, precio por unidad.",
+        "imagen": "https://m.media-amazon.com/images/I/71VcSW3Q7PL._AC_UF1000,1000_QL80_.jpg"
     },
     {
         "id": 7,
