@@ -103,6 +103,7 @@ main h1 {
 .card-visual {
     position: relative;
     height: 140px;
+    weight: 140;
     border-radius: 6px;
     background: linear-gradient(135deg, var(--morado-acento), var(--negro-solido));
     display: flex;
