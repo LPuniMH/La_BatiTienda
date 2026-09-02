@@ -281,7 +281,14 @@ main h1 {
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
-
 .btn-agregar:hover {
     background-color: var(--amarillo-hover);
+}
+
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
 }
