@@ -87,4 +87,24 @@ selectCategoria.addEventListener("change", filtrarProductos);
 
 // Al cargar la página: llenamos el select y mostramos todos los productos
 poblarCategorias();
-renderizarProductos(productos);
+
+const parametrosURL = new URLSearchParams(window.location.search);
+const categoriaURL = parametrosURL.get('cat');
+
+if (categoriaURL) {
+    const opcionExiste = Array.from(selectCategoria.options).some(function(opcion) {
+        return opcion.value === categoriaURL;
+    });
+
+    if (!opcionExiste) {
+        const nuevaOpcion = document.createElement("option");
+        nuevaOpcion.value = categoriaURL;
+        nuevaOpcion.textContent = categoriaURL;
+        selectCategoria.appendChild(nuevaOpcion);
+    }
+    
+    selectCategoria.value = categoriaURL;
+    filtrarProductos();
+} else {
+    renderizarProductos(productos);
+}
