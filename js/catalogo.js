@@ -28,7 +28,7 @@ function renderizarProductos(listaProductos) {
                   }
               <span class="card-codigo">${producto.codigo}</span>
             </div>
-            <p class="card-pie-foto">Foto próximamente</p>
+           
 
             <span class="card-categoria">${producto.categoria}</span>
             <h3 class="card-titulo">${producto.nombre}</h3>
