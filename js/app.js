@@ -22,7 +22,7 @@ function renderizarProductos(listaProductos) {
 
         caja.innerHTML = `
             <div class="card-visual">
-                <span class="card-icono">${obtenerInicial(nombre.producto)}</span>
+                <span class="card-icono">${obtenerInicial(producto.nombre)}</span>
                 <span class="card-codigo">${producto.codigo}</span>
             </div>
             <p class="card-pie-foto">Foto próximamente</p>
