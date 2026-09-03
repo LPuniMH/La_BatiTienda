@@ -8,10 +8,6 @@ function obtenerInicial(nombre) {
     return nombre.charAt(0).toUpperCase();
 }
 
-function obtenerImagen(imagen) {
-    return imagen;
-}
-
 function renderizarProductos(listaProductos) {
     contenedorProductos.innerHTML = "";
 
@@ -23,7 +19,6 @@ function renderizarProductos(listaProductos) {
             <div class="card-visual">
               ${producto.imagen ? `<img src="${producto.imagen}" alt="${producto.nombre}" class="card-img">` 
                                 : `<span class="card-icono">${obtenerInicial(producto.nombre)}</span>`
-
                   }
               <span class="card-codigo">${producto.codigo}</span>
             </div>
@@ -73,7 +68,7 @@ function filtrarProductos() {
         
         let coincideCategoriaPrincipal = true;
         if (categoriaURL && mapaCategorias[categoriaURL]) {
-            coincideCategoriaPrincipal = mapaCategorias[categoriaURL].includes(producto.codigo);
+            coincideCategoriaPrincipal = mapaCategorias[categoriaURL].codigos.includes(producto.codigo);
         }
 
         return coincideNombre && coincideFiltro && coincideCategoriaPrincipal;
@@ -102,9 +97,23 @@ function activarEnlaceNavbar() {
     }, 100);
 }
 
+function actualizarTextosCabecera() {
+    const tituloElemento = document.getElementById("tituloCatalogo");
+    const descElemento = document.getElementById("descCatalogo");
+
+    if (categoriaURL && mapaCategorias[categoriaURL]) {
+        tituloElemento.textContent = mapaCategorias[categoriaURL].titulo;
+        descElemento.textContent = mapaCategorias[categoriaURL].descripcion;
+    } else {
+        tituloElemento.textContent = "Nuestro catálogo";
+        descElemento.textContent = "Kuromi, anime, figuras, peluches y superhéroes";
+    }
+}
+
 inputBuscar.addEventListener("input", filtrarProductos);
 selectCategoria.addEventListener("change", filtrarProductos);
 
 poblarCategorias();
 filtrarProductos();
 activarEnlaceNavbar();
+actualizarTextosCabecera();
