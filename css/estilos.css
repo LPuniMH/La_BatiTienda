@@ -252,7 +252,7 @@ main h1 {
 
 .main-navigation .nav-link {
     color: #000000 !important;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 600;
 }
 
@@ -263,8 +263,7 @@ main h1 {
 
 .search-btn,
 .cart-btn {
-    color: var(--texto-principal) !important;
-    border-color: var(--texto-principal) !important;
+    color: #000000 !important;
 }
 
 /* Boton agregar al carrito */
