@@ -4,8 +4,7 @@
 }
 
 .login-card {
-    width: 100%;
-    max-width: 400px;
+    width: 400px;
     background-color: var(--negro-translucido);
     border: 1px solid var(--morado-acento);
     border-radius: 10px;
