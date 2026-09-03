@@ -66,9 +66,9 @@ const productos = [
         "marca": "Shueisha",
         "modelo": "Edición Kanzenban",
         "categoria": "Mangas",
-        "precio": 8990,
-        "stock": 9,
-        "descripcion": "Mangas de Dragon Ball del 1-26, precio por unidad.",
+        "precio": 31990,
+        "stock": 3,
+        "descripcion": "Mangas de Dragon Ball BOX 1-26 PACK COLECCION COMPLETA.",
         "imagen": "https://m.media-amazon.com/images/I/71VcSW3Q7PL._AC_UF1000,1000_QL80_.jpg"
     },
     {
