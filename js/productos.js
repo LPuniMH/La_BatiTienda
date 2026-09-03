@@ -81,7 +81,7 @@ const productos = [
         "precio": 32990,
         "stock": 5,
         "descripcion": "18 cm, pose dinámica, detalle de aura incluido.",
-        "imagen": "img/figura-goku.jpg"
+        "imagen": "https://image.made-in-china.com/202f0j00FdLqHUtrbMkD/Wholesale-Japanese-Action-Figures-Toys-Dragon-Ball-Z-Super-Saiyan-Goku-Statues-Base-Luminescence-Anime-Figure.webp"
     },
     {
         "id": 8,
@@ -98,14 +98,14 @@ const productos = [
     {
         "id": 9,
         "codigo": "SH001",
-        "nombre": "Figura Batman Caballero de la Noche",
+        "nombre": "Figura Batman Patito",
         "marca": "McFarlane Toys",
         "modelo": "DC Multiverse",
         "categoria": "Superhéroes",
-        "precio": 34990,
+        "precio": 5990,
         "stock": 4,
-        "descripcion": "18 cm, 12 puntos de articulación, accesorios incluidos.",
-        "imagen": "img/figura-batman.jpg"
+        "descripcion": "Figura patito de Batman, edicion exclusiva",
+        "imagen": "https://tubbz.com/cdn/shop/files/DCComics_Bundle1_TBZUK.jpg?v=1780408205&width=500"
     },
     {
         "id": 10,
@@ -114,10 +114,10 @@ const productos = [
         "marca": "Hasbro",
         "modelo": "Marvel Legends",
         "categoria": "Superhéroes",
-        "precio": 29990,
+        "precio": 25990,
         "stock": 7,
         "descripcion": "15 cm, pose de acción, detalle texturizado del traje.",
-        "imagen": "img/figura-spiderman.jpg"
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7ygD1UPVtHp2rG3xdkkJuCfYmGGwoMm9DYeWFqwf4CPpzF6Xrhfrxjrcb&s=10"
     },
     {
         "id": 11,
@@ -129,54 +129,56 @@ const productos = [
         "precio": 13990,
         "stock": 11,
         "descripcion": "Peluche oficial, tela suave, ideal para todas las edades.",
-        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwBdGG8Q_Vb_xv2AVFQ3eo5Er34HuzxYGyyOoNsbG6SfRX7CQhIU-k7Ro&s=10"
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfx00banVmPyZdx_76OZlT2XnxUeKERLKglV3Zjfit-Q&s=10"
     },
     {
         "id": 12,
         "codigo": "PL002",
-        "nombre": "Peluche Totoro",
-        "marca": "Studio Ghibli",
+        "nombre": "Peluche Stitch",
+        "marca": "Disney",
         "modelo": "25cm",
         "categoria": "Peluches",
         "precio": 16990,
         "stock": 8,
-        "descripcion": "Peluche gris con detalles bordados, relleno hipoalergénico.",
-        "imagen": "https://meeq.com.au/cdn/shop/files/67315-3176710.jpg?v=1709776394"
+        "descripcion": "Peluche Stitch azul tierno",
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVgqldhiHAJmzAOaiEHHkGNtbN_0Cbrxbu11v6o6yHAhOPJNIE0CTJ9Ro&s=10"
     },
     {
         "id": 13,
         "codigo": "PO001",
-        "nombre": "Póster Attack on Titan",
-        "marca": "Genérico",
-        "modelo": "A3",
+        "nombre": "Cartas Pokemon",
+        "marca": "Pokemon",
+        "modelo": "Cartas",
         "categoria": "Anime",
-        "precio": 5990,
+        "precio": 8990,
         "stock": 20,
-        "descripcion": "Impresión A3, acabado mate, viene con tubo protector.",
-        "imagen": "img/poster-aot.jpg"
+        "descripcion": "Sobre de cartas Pokemon, producto original",
+        "imagen": "https://elreinodelosduelos.cl/wp-content/uploads/2026/06/PRODUCTO-WEB-24.jpg"
     },
     {
         "id": 14,
         "codigo": "AC001",
-        "nombre": "Set Llaveros Chibi Anime Surtido",
+        "nombre": "Audifonos Minecraft",
         "marca": "Genérico",
-        "modelo": "Pack x5",
-        "categoria": "Accesorios",
+        "modelo": "Audifonos",
+        "categoria": "Electronica",
         "precio": 9990,
         "stock": 18,
-        "descripcion": "5 llaveros acrílicos de personajes variados, doble cara.",
-        "imagen": "https://www.merakiimee.com/cdn/shop/files/IMG_20250111_114450.jpg?v=1741122614"
+        "descripcion": "Audifonos inalamnbricos, color verde, bateria de larga duracion.",
+        "imagen": "https://http2.mlstatic.com/D_NQ_NP_675197-CBT79731390564_102024-O.webp"
     },
     {
         "id": 15,
         "codigo": "SH003",
-        "nombre": "Cómic Batman Edición Especial",
-        "marca": "DC Comics",
-        "modelo": "Tapa dura",
+        "nombre": "Lego Batman Mini",
+        "marca": "LEGO",
+        "modelo": "Bloques de construccion",
         "categoria": "Superhéroes",
         "precio": 12990,
         "stock": 7,
-        "descripcion": "Portada variante, papel couché, 48 páginas.",
-        "imagen": "img/comic-batman.jpg"
+        "descripcion": "Lego Batman de 200 piezas",
+        "imagen": "https://www.lego.com/cdn/cs/set/assets/blt7ccd17b931042874/40726_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1
+
+"
     }
 ];
