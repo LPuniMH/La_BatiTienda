@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { padding: 20px; background-color: #f8f9fa; }
+        .preview-img { max-width: 100%; height: 200px; object-fit: contain; border: 1px dashed #ccc; background: #fff; margin-top: 10px; }
+        .json-output { height: 350px; font-family: monospace; resize: none; }
+    </style>
+</head>
+<body>
+    <div class="container max-width-container">
+        <h2 class="mb-4 text-primary">Añadir Nuevo Producto</h2>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <form id="formProducto">
+                    <div class="row g-2 mb-2">
+                        <div class="col-sm-6">
+                            <label class="form-label fw-bold">ID (Número)</label>
+                            <input type="number" id="prodId" class="form-control" required>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label fw-bold">Código (Ej: FG003)</label>
+                            <input type="text" id="prodCodigo" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <label class="form-label fw-bold">Nombre del Producto</label>
+                        <input type="text" id="prodNombre" class="form-control" required>
+                    </div>
+                    
+                    <div class="row g-2 mb-2">
+                        <div class="col-sm-6">
+                            <label class="form-label fw-bold">Marca</label>
+                            <input type="text" id="prodMarca" class="form-control" required>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label fw-bold">Modelo</label>
+                            <input type="text" id="prodModelo" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-2 mb-2">
+                        <div class="col-sm-4">
+                            <label class="form-label fw-bold">Filtro (Categoría)</label>
+                            <input type="text" id="prodCategoria" class="form-control" required>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="form-label fw-bold">Precio</label>
+                            <input type="number" id="prodPrecio" class="form-control" required>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="form-label fw-bold">Stock</label>
+                            <input type="number" id="prodStock" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <label class="form-label fw-bold">Descripción</label>
+                        <textarea id="prodDescripcion" class="form-control" rows="2" required></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">URL de la Imagen</label>
+                        <input type="url" id="prodImagen" class="form-control" placeholder="https://..." required>
+                        <img id="previewImagen" src="" alt="Vista previa" class="preview-img d-none">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success w-100 fw-bold">Generar Código</button>
+                </form>
+            </div>
+            
+            <div class="col-md-6 mt-4 mt-md-0">
+                <label class="form-label fw-bold text-success">Código generado (Copia y pega en productos.js):</label>
+                <textarea id="resultadoJson" class="form-control json-output" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const inputImagen = document.getElementById("prodImagen");
+        const previewImagen = document.getElementById("previewImagen");
+        const formProducto = document.getElementById("formProducto");
+        const resultadoJson = document.getElementById("resultadoJson");
+
+        inputImagen.addEventListener("input", () => {
+            const url = inputImagen.value;
+            if (url) {
+                previewImagen.src = url;
+                previewImagen.classList.remove("d-none");
+            } else {
+                previewImagen.src = "";
+                previewImagen.classList.add("d-none");
+            }
+        });
+
+        formProducto.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const nuevoProducto = {
+                id: parseInt(document.getElementById("prodId").value),
+                codigo: document.getElementById("prodCodigo").value,
+                nombre: document.getElementById("prodNombre").value,
+                marca: document.getElementById("prodMarca").value,
+                modelo: document.getElementById("prodModelo").value,
+                categoria: document.getElementById("prodCategoria").value,
+                precio: parseInt(document.getElementById("prodPrecio").value),
+                stock: parseInt(document.getElementById("prodStock").value),
+                descripcion: document.getElementById("prodDescripcion").value,
+                imagen: document.getElementById("prodImagen").value
+            };
+
+            const jsonString = JSON.stringify(nuevoProducto, null, 4);
+            resultadoJson.value = ",\n" + jsonString;
+            
+            resultadoJson.select();
+            document.execCommand('copy');
+            alert("¡Código generado y copiado al portapapeles! Pégalo al final de tu lista en productos.js");
+        });
+    </script>
+</body>
+</html>
