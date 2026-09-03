@@ -386,7 +386,7 @@ const productos = [
     {
         "id": 33,
         "codigo": "AT385",
-        "nombre": "Jugeo de mesa Attack On Titan",
+        "nombre": "Juego de mesa Attack On Titan",
         "marca": "Cryptozoic Entertainment",
         "modelo": "Juego de mesa",
         "categoria": "Juguetes",
