@@ -5,7 +5,7 @@ const productos = [
         "nombre": "Peluche Kuromi Clásico",
         "marca": "Sanrio",
         "modelo": "30cm Sentada",
-        "categoria": "Kuromi",
+        "categoria": "Peluches",
         "precio": 15990,
         "stock": 10,
         "descripcion": "Peluche oficial, 30 cm, felpa suave, ideal para coleccionar.",
@@ -17,7 +17,7 @@ const productos = [
         "nombre": "Mochila My Melody",
         "marca": "Sanrio",
         "modelo": "Escolar",
-        "categoria": "Melody",
+        "categoria": "Accesorios",
         "precio": 24990,
         "stock": 6,
         "descripcion": "Mochila con bolsillo frontal, parche bordado y correas ajustables.",
@@ -28,11 +28,11 @@ const productos = [
         "codigo": "KU003",
         "nombre": "Lampara Kuromi",
         "marca": "Sanrio",
-        "modelo": "Lampara figura",
+        "modelo": "Electronica",
         "categoria": "Kuromi",
         "precio": 8990,
         "stock": 15,
-        "descripcion": "Lampara recargable morada con figura de Kuromi",
+        "descripcion": "Lampara recargable morada con figura de Kuromi.",
         "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWq0uyEwLo3q93PR5CFkVGCevdQI9vXsSylUNwd7P6-ejFmjk6uhoP02lO&s=10"
     },
     {
@@ -104,7 +104,7 @@ const productos = [
         "categoria": "Superhéroes",
         "precio": 5990,
         "stock": 4,
-        "descripcion": "Figura patito de Batman, edicion exclusiva",
+        "descripcion": "Figura patito de Batman, edicion exclusiva.",
         "imagen": "https://tubbz.com/cdn/shop/files/DCComics_Bundle1_TBZUK.jpg?v=1780408205&width=500"
     },
     {
@@ -140,7 +140,7 @@ const productos = [
         "categoria": "Peluches",
         "precio": 16990,
         "stock": 8,
-        "descripcion": "Peluche Stitch azul tierno",
+        "descripcion": "Peluche Stitch azul tierno.",
         "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVgqldhiHAJmzAOaiEHHkGNtbN_0Cbrxbu11v6o6yHAhOPJNIE0CTJ9Ro&s=10"
     },
     {
@@ -152,7 +152,7 @@ const productos = [
         "categoria": "Anime",
         "precio": 8990,
         "stock": 20,
-        "descripcion": "Sobre de cartas Pokemon, producto original",
+        "descripcion": "Sobre de cartas Pokemon, producto original.",
         "imagen": "https://elreinodelosduelos.cl/wp-content/uploads/2026/06/PRODUCTO-WEB-24.jpg"
     },
     {
@@ -164,7 +164,7 @@ const productos = [
         "categoria": "Electronica",
         "precio": 9990,
         "stock": 18,
-        "descripcion": "Audifonos inalamnbricos, color verde, bateria de larga duracion.",
+        "descripcion": "Audifonos inalambricos, color verde, bateria de larga duracion.",
         "imagen": "https://http2.mlstatic.com/D_NQ_NP_675197-CBT79731390564_102024-O.webp"
     },
     {
@@ -176,7 +176,7 @@ const productos = [
         "categoria": "Superhéroes",
         "precio": 12990,
         "stock": 7,
-        "descripcion": "Lego Batman de 200 piezas",
+        "descripcion": "Lego Batman de 200 piezas.",
         "imagen": "https://www.lego.com/cdn/cs/set/assets/blt7ccd17b931042874/40726_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1"
     },
     {
@@ -206,7 +206,7 @@ const productos = [
     {
         "id": 18,
         "codigo": "FP345",
-        "nombre": "Funko Pop IT",
+        "nombre": "Funko Pop Pennywise",
         "marca": "Funko Pop",
         "modelo": "Funko POP",
         "categoria": "Juguetes",
@@ -224,7 +224,7 @@ const productos = [
         "categoria": "Juguetes",
         "precio": 9990,
         "stock": 19,
-        "descripcion": "Funko Pop Groot Star Wars, edicion basica.",
+        "descripcion": "Funko Pop Groot Guardianes De La Galexia, edicion basica.",
         "imagen": "https://thebrandsclub.com/cdn/shop/files/13230_gotg2_groot_pop_glam_hires-1c06712d-6455-416f-89b4-23a4cdb29aa7_27a984cf-ceab-4543-a3d3-aea36cbbbee5.jpg?v=1769789649"
     },
     {
@@ -281,7 +281,7 @@ const productos = [
         "nombre": "Lampara Minecraft",
         "marca": "Generico",
         "modelo": "Lampara",
-        "categoria": "Accesorios",
+        "categoria": "Electronica",
         "precio": 12990,
         "stock": 10,
         "descripcion": "Lampara pocion Minecraft, recargable, incluye USB.",
