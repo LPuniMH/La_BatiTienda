@@ -129,7 +129,7 @@ const productos = [
         "precio": 13990,
         "stock": 11,
         "descripcion": "Peluche oficial, tela suave, ideal para todas las edades.",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfx00banVmPyZdx_76OZlT2XnxUeKERLKglV3Zjfit-Q&s=10"
+        "imagen":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfx00banVmPyZdx_76OZlT2XnxUeKERLKglV3Zjfit-Q&s=10"
     },
     {
         "id": 12,
@@ -178,5 +178,41 @@ const productos = [
         "stock": 7,
         "descripcion": "Lego Batman de 200 piezas",
         "imagen": "https://www.lego.com/cdn/cs/set/assets/blt7ccd17b931042874/40726_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1"
-    }
+    },
+    {
+        "id": 14,
+        "codigo": "AC001",
+        "nombre": "Audifonos Minecraft",
+        "marca": "Genérico",
+        "modelo": "Audifonos",
+        "categoria": "Electronica",
+        "precio": 9990,
+        "stock": 18,
+        "descripcion": "Audifonos inalamnbricos, color verde, bateria de larga duracion.",
+        "imagen": "https://http2.mlstatic.com/D_NQ_NP_675197-CBT79731390564_102024-O.webp"
+    },
+    {
+        "id": 14,
+        "codigo": "AC001",
+        "nombre": "Audifonos Minecraft",
+        "marca": "Genérico",
+        "modelo": "Audifonos",
+        "categoria": "Electronica",
+        "precio": 9990,
+        "stock": 18,
+        "descripcion": "Audifonos inalamnbricos, color verde, bateria de larga duracion.",
+        "imagen": "https://http2.mlstatic.com/D_NQ_NP_675197-CBT79731390564_102024-O.webp"
+    },
+    {
+        "id": 14,
+        "codigo": "AC001",
+        "nombre": "Audifonos Minecraft",
+        "marca": "Genérico",
+        "modelo": "Audifonos",
+        "categoria": "Electronica",
+        "precio": 9990,
+        "stock": 18,
+        "descripcion": "Audifonos inalamnbricos, color verde, bateria de larga duracion.",
+        "imagen": "https://http2.mlstatic.com/D_NQ_NP_675197-CBT79731390564_102024-O.webp"
+    },
 ];
