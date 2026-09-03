@@ -24,19 +24,6 @@ body {
     object-fit: contain;
 }
 
-.main-navigation .nav-link {
-    color: #000000 !important;
-    font-size: 13px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    transition: color 0.2s ease;
-}
-
-.main-navigation .nav-link.active,
-.main-navigation .nav-link:hover {
-    color: #ff0000 !important;
-}
-
 .search-btn {
     text-decoration: none;
 }

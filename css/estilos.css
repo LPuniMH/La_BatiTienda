@@ -103,7 +103,6 @@ main h1 {
 .card-visual {
     position: relative;
     height: 140px;
-    weight: 140;
     border-radius: 6px;
     background: linear-gradient(135deg, var(--morado-acento), var(--negro-solido));
     display: flex;
@@ -252,14 +251,14 @@ main h1 {
 }
 
 .main-navigation .nav-link {
-    color: var(--texto-principal) !important;
-    font-size: 0.85rem;
+    color: #000000 !important;
+    font-size: 20px;
     font-weight: 600;
 }
 
 .main-navigation .nav-link:hover,
 .main-navigation .nav-link.active {
-    color: var(--amarillo-bat) !important;
+    color: #ff0000 !important;
 }
 
 .search-btn,
