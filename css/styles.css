@@ -48,3 +48,68 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+
+.fila-categoria {
+    margin-bottom: 50px;
+}
+
+.fila-titulo {
+    color: var(--amarillo-bat);
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--morado-acento);
+}
+
+.scroll-horizontal {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 15px;
+    scroll-snap-type: x mandatory;
+}
+
+.scroll-horizontal::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scroll-horizontal::-webkit-scrollbar-track {
+    background: var(--negro-translucido);
+    border-radius: 4px;
+}
+
+.scroll-horizontal::-webkit-scrollbar-thumb {
+    background: var(--morado-acento);
+    border-radius: 4px;
+}
+
+.scroll-horizontal > .card,
+.scroll-horizontal > .tarjeta-ver-mas {
+    flex: 0 0 auto;
+    width: 260px;
+    scroll-snap-align: start;
+}
+
+.tarjeta-ver-mas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--negro-translucido);
+    border: 2px dashed var(--morado-acento);
+    border-radius: 10px;
+    color: var(--amarillo-bat);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.tarjeta-ver-mas:hover {
+    background-color: var(--morado-acento);
+    color: var(--texto-principal);
+    border-style: solid;
+    transform: translateY(-6px);
+}
