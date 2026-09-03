@@ -4,6 +4,10 @@
 }
 
 .login-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 400px;
     background-color: var(--negro-translucido);
     border: 1px solid var(--morado-acento);
@@ -152,4 +156,11 @@
     color: var(--texto-principal);
     opacity: 0.85;
     font-size: 0.9rem;
+}
+
+@media (max-width: 460px) {
+    .login-card {
+        width: 90vw;
+        padding: 24px 18px;
+    }
 }
