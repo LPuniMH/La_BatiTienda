@@ -177,8 +177,6 @@ const productos = [
         "precio": 12990,
         "stock": 7,
         "descripcion": "Lego Batman de 200 piezas",
-        "imagen": "https://www.lego.com/cdn/cs/set/assets/blt7ccd17b931042874/40726_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1
-
-"
+        "imagen": "https://www.lego.com/cdn/cs/set/assets/blt7ccd17b931042874/40726_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1"
     }
 ];
