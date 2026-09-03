@@ -1,9 +1,9 @@
-//Elementos html a usar
 const contenedorProductos = document.getElementById("contenedorProductos");
 const inputBuscar = document.getElementById("buscarProducto");
 const selectCategoria = document.getElementById("filtroCategoria");
+const parametrosURL = new URLSearchParams(window.location.search);
+const categoriaURL = parametrosURL.get('cat');
 
-//sello visual temporal
 function obtenerInicial(nombre) {
     return nombre.charAt(0).toUpperCase();
 }
@@ -12,7 +12,6 @@ function obtenerImagen(imagen) {
     return imagen;
 }
 
-//Se dibujan las cajas de productos en el contenedor
 function renderizarProductos(listaProductos) {
     contenedorProductos.innerHTML = "";
 
@@ -29,7 +28,6 @@ function renderizarProductos(listaProductos) {
               <span class="card-codigo">${producto.codigo}</span>
             </div>
            
-
             <span class="card-categoria">${producto.categoria}</span>
             <h3 class="card-titulo">${producto.nombre}</h3>
             <p class="card-descripcion">${producto.descripcion}</p>
@@ -50,7 +48,6 @@ function renderizarProductos(listaProductos) {
     });
 }
 
-//Pobla el select de categorías con las categorías unicas de los productos
 function poblarCategorias() {
     const todasLasCategorias = productos.map(function (producto) {
         return producto.categoria;
@@ -66,45 +63,48 @@ function poblarCategorias() {
     });
 }
 
-// Filtra los productos según el texto ingresado y la categoría seleccionada
 function filtrarProductos() {
     const texto = inputBuscar.value.toLowerCase();
-    const categoriaElegida = selectCategoria.value;
+    const filtroElegido = selectCategoria.value;
 
     const productosFiltrados = productos.filter(function (producto) {
         const coincideNombre = producto.nombre.toLowerCase().includes(texto);
-        const coincideCategoria = categoriaElegida === "todos" || producto.categoria === categoriaElegida;
+        const coincideFiltro = filtroElegido === "todos" || producto.categoria === filtroElegido;
+        
+        let coincideCategoriaPrincipal = true;
+        if (categoriaURL && mapaCategorias[categoriaURL]) {
+            coincideCategoriaPrincipal = mapaCategorias[categoriaURL].includes(producto.codigo);
+        }
 
-        return coincideNombre && coincideCategoria;
+        return coincideNombre && coincideFiltro && coincideCategoriaPrincipal;
     });
 
     renderizarProductos(productosFiltrados);
 }
 
-// Cada vez que se escribe en el input o se cambia la categoría, se filtran los productos
+function activarEnlaceNavbar() {
+    const intervaloNav = setInterval(() => {
+        const enlaces = document.querySelectorAll('.main-navigation .nav-link');
+        if (enlaces.length > 0) {
+            clearInterval(intervaloNav);
+            const rutaActual = window.location.pathname;
+
+            enlaces.forEach(enlace => {
+                const href = enlace.getAttribute('href');
+                
+                if (categoriaURL && href.includes(`cat=${categoriaURL}`)) {
+                    enlace.classList.add('active');
+                } else if (!categoriaURL && rutaActual.includes('catalogo.html') && href === 'catalogo.html') {
+                    enlace.classList.add('active');
+                }
+            });
+        }
+    }, 100);
+}
+
 inputBuscar.addEventListener("input", filtrarProductos);
 selectCategoria.addEventListener("change", filtrarProductos);
 
-// Al cargar la página: llenamos el select y mostramos todos los productos
 poblarCategorias();
-
-const parametrosURL = new URLSearchParams(window.location.search);
-const categoriaURL = parametrosURL.get('cat');
-
-if (categoriaURL) {
-    const opcionExiste = Array.from(selectCategoria.options).some(function(opcion) {
-        return opcion.value === categoriaURL;
-    });
-
-    if (!opcionExiste) {
-        const nuevaOpcion = document.createElement("option");
-        nuevaOpcion.value = categoriaURL;
-        nuevaOpcion.textContent = categoriaURL;
-        selectCategoria.appendChild(nuevaOpcion);
-    }
-    
-    selectCategoria.value = categoriaURL;
-    filtrarProductos();
-} else {
-    renderizarProductos(productos);
-}
+filtrarProductos();
+activarEnlaceNavbar();
