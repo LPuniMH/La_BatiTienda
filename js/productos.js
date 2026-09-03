@@ -286,5 +286,114 @@ const productos = [
         "stock": 10,
         "descripcion": "Lampara pocion Minecraft, recargable, incluye USB.",
         "imagen": "https://http2.mlstatic.com/D_Q_NP_920744-CBT81446330011_122024-O.webp"
+    },
+    {
+        "id": 25,
+        "codigo": "OP647",
+        "nombre": "Figura Hollow Knight",
+        "marca": "Generico",
+        "modelo": "Figura",
+        "categoria": "Figura",
+        "precio": 14990,
+        "stock": 7,
+        "descripcion": "Figura Hollow Knight 27 cm.",
+        "imagen": "https://ae-pic-a1.aliexpress-media.com/kf/S6234290a946d4de89d532c77b5e9d7e1G.jpg"
+    },
+    {
+        "id": 26,
+        "codigo": "LP459",
+        "nombre": "Hollow Knigth Edicion Coleccionista",
+        "marca": "FANGAMER",
+        "modelo": "Juegos",
+        "categoria": "Electronica",
+        "precio": 159990,
+        "stock": 2,
+        "descripcion": "Incluye todos los accesorios fisicos + digital edicion coleccionable.",
+        "imagen": "https://cdn.shopify.com/s/files/1/0745/0243/9197/files/product_HK_CE_photo_switch_cleaningcloth2.webp?v=1752532962"
+    },
+    {
+        "id": 27,
+        "codigo": "GW105",
+        "nombre": "God Of War Edicion Coleccionable",
+        "marca": "Sony",
+        "modelo": "Edicion Coleccionista",
+        "categoria": "Juegos",
+        "precio": 169990,
+        "stock": 2,
+        "descripcion": "Incluye todos los accesorios fisicos + digital edicion coleccionable.",
+        "imagen": "https://m.media-amazon.com/images/I/91Ij9hf-4+L.jpg"
+    },
+    {
+        "id": 28,
+        "codigo": "UP184",
+        "nombre": "Manga Uzumaki",
+        "marca": "Planeta Comic",
+        "modelo": "Manga",
+        "categoria": "Mangas",
+        "precio": 11990,
+        "stock": 13,
+        "descripcion": "Manga Junji Ito UZUMAKI, tapa dura.",
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmh35u0seaR2Y0AcJhKqKntF37wxKCIERool4jfsBvThGq34Vz4G4XNAw&s=10"
+    },
+    {
+        "id": 29,
+        "codigo": "CB492",
+        "nombre": "Comic Batman vs Superman",
+        "marca": "DC Comics",
+        "modelo": "Comic",
+        "categoria": "SuperHeroes",
+        "precio": 12990,
+        "stock": 17,
+        "descripcion": "Comic Batman VS Superman, Tapa dura.",
+        "imagen": "https://u-mercari-images.mercdn.net/photos/m22404587984_1.jpg?width=2560&quality=75&_=1769972381"
+    },
+    {
+        "id": 30,
+        "codigo": "MB537",
+        "nombre": "BATMANGA",
+        "marca": "Panini",
+        "modelo": "SuperHeroes",
+        "categoria": "Mangas",
+        "precio": 13990,
+        "stock": 11,
+        "descripcion": "BATMANGA volumen 1.",
+        "imagen": "https://cdnx.jumpseller.com/shazam-online/image/67190244/batmanga_01.jpg?1756836083"
+    },
+    {
+        "id": 31,
+        "codigo": "FG354",
+        "nombre": "Juego de mesa de Batman",
+        "marca": " GEN X",
+        "modelo": " Juguetes",
+        "categoria": "Cartas",
+        "precio": 10990,
+        "stock": 7,
+        "descripcion": "Juego de mesa de Batman: El regreso del caballero oscuro.",
+        "imagen": "https://www.updown.cl/wp-content/uploads/2025/10/original-219.jpeg"
+    },
+    {
+        "id": 32,
+        "codigo": "CM267",
+        "nombre": "Cartas Magic",
+        "marca": "Wizards of the Coast",
+        "modelo": "Commander",
+        "categoria": "Cartas",
+        "precio": 30990,
+        "stock": 5,
+        "descripcion": "Juego de cartas MAGIC, Mazo Commander Calling All Angels. 100 cartas multijugador",
+        "imagen": "https://elreinodelosduelos.cl/wp-content/uploads/2026/08/PRODUCTO-WEB1-3-3-768x960.jpg.webp"
+    },
+    {
+        "id": 33,
+        "codigo": "AT385",
+        "nombre": "Jugeo de mesa Attack On Titan",
+        "marca": "Cryptozoic Entertainment",
+        "modelo": "Juego de mesa",
+        "categoria": "Juguetes",
+        "precio": 32990,
+        "stock": 4,
+        "descripcion": "Attack on Titan: La última resistencia. Juego de mesa asimétrico y semi-cooperativo basado en el anime.",
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfVjFLS9pdhMNDciJbqCgczYOLfy0wcaOtsvncXPL0oXMdF4NIotsEnYHf&s=10"
     }
+    
 ];
