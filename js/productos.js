@@ -48,7 +48,7 @@ const productos = [
         "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUhn17yfiJGS-6tNXrEbKig5V9FBt2TyaNVSOZzpo5F-Lb__KpGPibyIM&s=10"
     },
     {
-        "id": 15,
+        "id": 5,
         "codigo": "SH003",
         "nombre": "Cómic Batman Edición Especial",
         "marca": "DC Comics",
@@ -93,7 +93,7 @@ const productos = [
         "precio": 27990,
         "stock": 6,
         "descripcion": "16 cm, base incluida, edición coleccionable.",
-        "imagen": "img/figura-naruto.jpg"
+        "imagen": "https://dojiw2m9tvv09.cloudfront.net/68889/product/d9a5e824-3cd8-4efd-a746-7cda57704957-3f68a38c9001cecd2c78f5f34f2a56f06493.png"
     },
     {
         "id": 9,
@@ -180,7 +180,7 @@ const productos = [
         "imagen": "https://www.lego.com/cdn/cs/set/assets/blt7ccd17b931042874/40726_Prod.png?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1"
     },
     {
-        "id": 14,
+        "id": 16,
         "codigo": "EA001",
         "nombre": "Colonia Batman",
         "marca": "Genérico",
@@ -192,7 +192,7 @@ const productos = [
         "imagen": "https://i.makeup.es/2/2i/2i3dvuwomovg.jpg"
     },
     {
-        "id": 14,
+        "id": 17,
         "codigo": "LL034",
         "nombre": "Llaveros Stitch",
         "marca": "Genérico",
@@ -204,7 +204,7 @@ const productos = [
         "imagen": "https://dcdn-us.mitiendanube.com/stores/954/283/products/llavero-stitch-amor-c40aca245b45c2f7f717262654447723-640-0.webp"
     },
     {
-        "id": 14,
+        "id": 18,
         "codigo": "FP345",
         "nombre": "Funko Pop IT",
         "marca": "Funko Pop",
@@ -216,39 +216,75 @@ const productos = [
         "imagen": "https://i5.walmartimages.com/seo/Funko-POP-Movies-IT-Pennywise_1093cecb-8c03-4c20-8fd6-9494b59a5ac4.4e57a75179c82b3c0ef27341810a09f8.jpeg"
     },
     {
-        "id": 14,
-        "codigo": "FP345",
-        "nombre": "Funko Pop IT",
+        "id": 19,
+        "codigo": "FP346",
+        "nombre": "Funko Pop Groot",
         "marca": "Funko Pop",
         "modelo": "Funko POP",
         "categoria": "Juguetes",
         "precio": 9990,
         "stock": 18,
-        "descripcion": "Funko Pop Pennywise IT, edicion basica.",
-        "imagen": "https://i5.walmartimages.com/seo/Funko-POP-Movies-IT-Pennywise_1093cecb-8c03-4c20-8fd6-9494b59a5ac4.4e57a75179c82b3c0ef27341810a09f8.jpeg"
+        "descripcion": "Funko Pop Groot Star Wars, edicion basica.",
+        "imagen": "https://thebrandsclub.com/cdn/shop/files/13230_gotg2_groot_pop_glam_hires-1c06712d-6455-416f-89b4-23a4cdb29aa7_27a984cf-ceab-4543-a3d3-aea36cbbbee5.jpg?v=1769789649"
     },
     {
-        "id": 14,
+        "id": 20,
         "codigo": "FP345",
-        "nombre": "Funko Pop IT",
+        "nombre": "Funko Pop Time Wizard",
         "marca": "Funko Pop",
         "modelo": "Funko POP",
         "categoria": "Juguetes",
         "precio": 9990,
         "stock": 18,
-        "descripcion": "Funko Pop Pennywise IT, edicion basica.",
-        "imagen": "https://i5.walmartimages.com/seo/Funko-POP-Movies-IT-Pennywise_1093cecb-8c03-4c20-8fd6-9494b59a5ac4.4e57a75179c82b3c0ef27341810a09f8.jpeg"
+        "descripcion": "Funko Pop Time Wizard YU-GI-OH!, edicion basica.",
+        "imagen": "https://www.weplay.cl/pub/media/catalog/product/cache/3f1b140c3c9f36fbf6b01dffb521c246/8/8/889698720656-02.jpg"
     },
     {
-        "id": 14,
+        "id": 21,
         "codigo": "FP345",
-        "nombre": "Funko Pop IT",
-        "marca": "Funko Pop",
-        "modelo": "Funko POP",
-        "categoria": "Juguetes",
-        "precio": 9990,
+        "nombre": "Set Maquiilaje The Simpsons",
+        "marca": "MAC",
+        "modelo": "Set Maquillaje",
+        "categoria": "Maquillaje",
+        "precio": 29990,
         "stock": 18,
-        "descripcion": "Funko Pop Pennywise IT, edicion basica.",
-        "imagen": "https://i5.walmartimages.com/seo/Funko-POP-Movies-IT-Pennywise_1093cecb-8c03-4c20-8fd6-9494b59a5ac4.4e57a75179c82b3c0ef27341810a09f8.jpeg"
+        "descripcion": "Set maquillaje: Sombra, Rubor en polvo, Paleta de contorno e iluminadores y labial. Edicion limitada.",
+        "imagen": "https://www.mercadonegro.pe/wp-content/uploads/2021/11/cosmeticos-simpson.jpg"
     },
+    {
+        "id": 22,
+        "codigo": "FP345",
+        "nombre": "Set Maquiilaje The Simpsons",
+        "marca": "MAC",
+        "modelo": "Set Maquillaje",
+        "categoria": "Maquillaje",
+        "precio": 29990,
+        "stock": 18,
+        "descripcion": "Set maquillaje: Sombra, Rubor en polvo, Paleta de contorno e iluminadores y labial. Edicion limitada.",
+        "imagen": "https://www.mercadonegro.pe/wp-content/uploads/2021/11/cosmeticos-simpson.jpg"
+    },
+    {
+        "id": 23,
+        "codigo": "FP345",
+        "nombre": "Set Maquiilaje The Simpsons",
+        "marca": "MAC",
+        "modelo": "Set Maquillaje",
+        "categoria": "Maquillaje",
+        "precio": 29990,
+        "stock": 18,
+        "descripcion": "Set maquillaje: Sombra, Rubor en polvo, Paleta de contorno e iluminadores y labial. Edicion limitada.",
+        "imagen": "https://www.mercadonegro.pe/wp-content/uploads/2021/11/cosmeticos-simpson.jpg"
+    },
+    {
+        "id": 24,
+        "codigo": "FP345",
+        "nombre": "Set Maquiilaje The Simpsons",
+        "marca": "MAC",
+        "modelo": "Set Maquillaje",
+        "categoria": "Maquillaje",
+        "precio": 29990,
+        "stock": 18,
+        "descripcion": "Set maquillaje: Sombra, Rubor en polvo, Paleta de contorno e iluminadores y labial. Edicion limitada.",
+        "imagen": "https://www.mercadonegro.pe/wp-content/uploads/2021/11/cosmeticos-simpson.jpg"
+    }
 ];
