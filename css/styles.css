@@ -82,10 +82,12 @@ body {
 
 .scroll-horizontal {
     display: flex;
+    flex-wrap: nowrap;
     overflow-x: auto;
     gap: 20px;
-    padding-bottom: 15px;
+    padding-bottom: 25px;
     scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
 }
 
 .scroll-horizontal::-webkit-scrollbar {
@@ -104,8 +106,9 @@ body {
 
 .scroll-horizontal > .card,
 .scroll-horizontal > .tarjeta-ver-mas {
-    flex: 0 0 auto;
-    width: 260px;
+    flex: 0 0 260px !important;
+    min-width: 260px !important;
+    width: 260px !important;
     scroll-snap-align: start;
 }
 
@@ -129,4 +132,13 @@ body {
     color: var(--texto-principal);
     border-style: solid;
     transform: translateY(-6px);
+}
+
+@media (max-width: 768px) {
+    .fila-titulo {
+        display: inline-block;
+        font-size: 1.2rem;
+        padding: 8px 15px;
+        margin-bottom: 15px;
+    }
 }
