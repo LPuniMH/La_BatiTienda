@@ -88,6 +88,7 @@ body {
     padding-bottom: 25px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    width: 100%;
 }
 
 .scroll-horizontal::-webkit-scrollbar {
