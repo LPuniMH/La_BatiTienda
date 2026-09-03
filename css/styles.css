@@ -55,12 +55,16 @@ body {
 }
 
 .fila-titulo {
+    display: inline-block;
+    background-color: var(--negro-translucido);
+    border: 1px solid var(--morado-acento);
+    border-radius: 8px;
+    padding: 10px 25px;
     color: var(--amarillo-bat);
     font-size: 1.6rem;
     font-weight: bold;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid var(--morado-acento);
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .scroll-horizontal {
