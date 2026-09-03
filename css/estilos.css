@@ -27,8 +27,30 @@ main {
     flex: 1;
 }
 
-main h1 {
-    color: var(--texto-secundario);
+.contenedor-principal {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.toolbar-productos {
+    background-color: var(--negro-translucido);
+    border: 1px solid var(--morado-acento);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    color: var(--texto-principal);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.toolbar-productos h1 {
+    color: var(--amarillo-bat);
+}
+
+.peque-desc {
+    color: #cccccc;
+    font-size: 0.875em;
+    margin-top: 5px;
 }
 
 /*Buscador*/
@@ -102,7 +124,8 @@ main h1 {
 /* Placeholder visual mientras no hay fotos */
 .card-visual {
     position: relative;
-    height: 140px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     border-radius: 6px;
     background: linear-gradient(135deg, var(--morado-acento), var(--negro-solido));
     display: flex;
