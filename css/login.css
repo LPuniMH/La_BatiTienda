@@ -167,3 +167,21 @@
         padding: 24px 18px;
     }
 }
+
+
+.login-btn-google {
+    background-color: #ffffff;
+    color: #333333;
+    font-weight: bold;
+    border: 1px solid #cccccc;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.login-btn-google:hover {
+    background-color: #f1f1f1;
+    color: #333333;
+}

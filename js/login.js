@@ -1,125 +1,215 @@
-(function () {
-    //Elementos html a usar
-    const formularioLogin = document.getElementById("loginForm");
-    const inputUsuario = document.getElementById("usuario");
-    const inputPassword = document.getElementById("password");
-    const checkRecordar = document.getElementById("recordar");
-    const botonTogglePassword = document.getElementById("togglePassword");
-    const iconoTogglePassword = document.getElementById("iconoTogglePassword");
-    const botonIngresar = document.getElementById("botonIngresar");
-    const feedbackLogin = document.getElementById("loginFeedback");
-    const errorUsuario = document.getElementById("errorUsuario");
-    const errorPassword = document.getElementById("errorPassword");
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { 
+    getAuth, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword, 
+    GoogleAuthProvider, 
+    signInWithPopup, 
+    onAuthStateChanged,
+    sendEmailVerification,
+    sendPasswordResetEmail,
+    signOut
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    // Si esta página no tiene el formulario de login, no hace nada (evita errores en otras páginas)
-    if (!formularioLogin) return;
+const firebaseConfig = {
+    apiKey: "AIzaSyCgumyzzsQy77pJ270BjyO5-aJQJI3ZO4o",
+    authDomain: "la-batitienda.firebaseapp.com",
+    projectId: "la-batitienda",
+    storageBucket: "la-batitienda.firebasestorage.app",
+    messagingSenderId: "990894708844",
+    appId: "1:990894708844:web:da2a04f4541ab56baa2049"
+};
 
-    //Revisa si el texto ingresado tiene forma de correo válido (ej: nombre@dominio.com)
-    function esCorreoValido(texto) {
-        return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(texto);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+    if (user && user.emailVerified) {
+        window.location.href = "cart.html";
+    }
+});
+
+const formularioLogin = document.getElementById("loginForm");
+const inputUsuario = document.getElementById("usuario");
+const inputPassword = document.getElementById("password");
+const botonTogglePassword = document.getElementById("togglePassword");
+const iconoTogglePassword = document.getElementById("iconoTogglePassword");
+const botonIngresar = document.getElementById("botonIngresar");
+const botonGoogle = document.getElementById("botonGoogle");
+const feedbackLogin = document.getElementById("loginFeedback");
+const errorUsuario = document.getElementById("errorUsuario");
+const errorPassword = document.getElementById("errorPassword");
+const linkModo = document.getElementById("linkModo");
+const textoModo = document.getElementById("textoModo");
+const opcionesLogin = document.getElementById("opcionesLogin");
+const contenedorPassword = document.getElementById("contenedorPassword");
+const linkRecuperar = document.getElementById("linkRecuperar");
+
+let modoRegistro = false;
+let modoRecuperar = false;
+
+function esCorreoValido(texto) {
+    return /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(texto);
+}
+
+function esPasswordValida(texto) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(texto);
+}
+
+function mostrarError(input, elementoError, mensaje) {
+    if(input) input.classList.toggle("login-input-invalido", Boolean(mensaje));
+    if(elementoError) elementoError.textContent = mensaje || "";
+}
+
+function mostrarFeedback(mensaje, tipo) {
+    feedbackLogin.textContent = mensaje;
+    feedbackLogin.classList.remove("login-feedback-exito", "login-feedback-error");
+    if (tipo) {
+        feedbackLogin.classList.add(tipo === "exito" ? "login-feedback-exito" : "login-feedback-error");
+    }
+}
+
+function actualizarInterfaz() {
+    mostrarFeedback("", "");
+    mostrarError(inputUsuario, errorUsuario, "");
+    mostrarError(inputPassword, errorPassword, "");
+
+    if (modoRecuperar) {
+        document.querySelector(".login-title").textContent = "Recuperar contraseña";
+        document.querySelector(".login-subtitle").textContent = "Te enviaremos un enlace seguro";
+        botonIngresar.textContent = "Enviar correo";
+        contenedorPassword.classList.add("d-none");
+        opcionesLogin.classList.add("d-none");
+        botonGoogle.classList.add("d-none");
+        textoModo.textContent = "¿Recordaste tu contraseña?";
+        linkModo.textContent = "Inicia sesión";
+    } else if (modoRegistro) {
+        document.querySelector(".login-title").textContent = "Crear cuenta";
+        document.querySelector(".login-subtitle").textContent = "Únete a la Baticueva";
+        botonIngresar.textContent = "Registrarse";
+        contenedorPassword.classList.remove("d-none");
+        opcionesLogin.classList.add("d-none");
+        botonGoogle.classList.remove("d-none");
+        textoModo.textContent = "¿Ya tienes cuenta?";
+        linkModo.textContent = "Inicia sesión";
+    } else {
+        document.querySelector(".login-title").textContent = "Iniciar sesión";
+        document.querySelector(".login-subtitle").textContent = "Entra a tu cuenta para seguir comprando";
+        botonIngresar.textContent = "Ingresar";
+        contenedorPassword.classList.remove("d-none");
+        opcionesLogin.classList.remove("d-none");
+        botonGoogle.classList.remove("d-none");
+        textoModo.textContent = "¿No tienes cuenta?";
+        linkModo.textContent = "Regístrate";
+    }
+}
+
+function alternarModoGlobal(e) {
+    e.preventDefault();
+    if (modoRecuperar) {
+        modoRecuperar = false;
+        modoRegistro = false;
+    } else {
+        modoRegistro = !modoRegistro;
+    }
+    actualizarInterfaz();
+}
+
+function activarRecuperacion(e) {
+    e.preventDefault();
+    modoRecuperar = true;
+    modoRegistro = false;
+    actualizarInterfaz();
+}
+
+async function manejarEnvioLogin(evento) {
+    evento.preventDefault();
+    let esValido = true;
+    const email = inputUsuario.value.trim();
+    const password = inputPassword.value;
+
+    if (email === "" || !esCorreoValido(email)) {
+        mostrarError(inputUsuario, errorUsuario, "Ingresa un correo válido");
+        esValido = false;
+    } else {
+        mostrarError(inputUsuario, errorUsuario, "");
     }
 
-    //Muestra u oculta un mensaje de error debajo de un campo
-    function mostrarError(input, elementoError, mensaje) {
-        input.classList.toggle("login-input-invalido", Boolean(mensaje));
-        elementoError.textContent = mensaje || "";
-    }
-
-    //Muestra un mensaje general arriba del botón (éxito o error)
-    function mostrarFeedback(mensaje, tipo) {
-        feedbackLogin.textContent = mensaje;
-        feedbackLogin.classList.remove("login-feedback-exito", "login-feedback-error");
-        if (tipo) {
-            feedbackLogin.classList.add(tipo === "exito" ? "login-feedback-exito" : "login-feedback-error");
-        }
-    }
-
-    //Valida usuario y contraseña, mostrando los errores correspondientes
-    function validarFormulario() {
-        let esValido = true;
-        const usuarioIngresado = inputUsuario.value.trim();
-
-        if (usuarioIngresado === "") {
-            mostrarError(inputUsuario, errorUsuario, "Ingresa tu correo");
-            esValido = false;
-        } else if (!esCorreoValido(usuarioIngresado)) {
-            mostrarError(inputUsuario, errorUsuario, "Ingresa un correo válido (ej: nombre@dominio.com)");
-            esValido = false;
-        } else {
-            mostrarError(inputUsuario, errorUsuario, "");
-        }
-
-        // Alfanumérica (solo letras y números), mínimo 6 caracteres y al menos una mayúscula
-        const passwordValida = /^(?=.*[A-Z])[A-Za-z0-9]{6,}$/.test(inputPassword.value);
-
-        if (inputPassword.value === "") {
-            mostrarError(inputPassword, errorPassword, "Ingresa tu contraseña");
-            esValido = false;
-        } else if (!passwordValida) {
-            mostrarError(inputPassword, errorPassword, "Mínimo 6 caracteres, solo letras/números y al menos 1 mayúscula");
+    if (!modoRecuperar) {
+        if (!esPasswordValida(password)) {
+            mostrarError(inputPassword, errorPassword, "Mínimo 6 caracteres, 1 mayúscula, 1 minúscula y 1 número");
             esValido = false;
         } else {
             mostrarError(inputPassword, errorPassword, "");
         }
-
-        return esValido;
     }
 
-    //Muestra u oculta la contraseña al hacer clic en el ícono
-    function alternarVisibilidadPassword() {
-        const esTexto = inputPassword.type === "text";
-        inputPassword.type = esTexto ? "password" : "text";
-        iconoTogglePassword.textContent = esTexto ? "visibility" : "visibility_off";
-    }
+    if (!esValido) return;
 
-    //Guarda o borra el usuario recordado en el navegador
-    function manejarRecordarUsuario(usuario, recordar) {
-        if (recordar) {
-            localStorage.setItem("batitienda_usuario_recordado", usuario);
+    botonIngresar.disabled = true;
+    botonIngresar.textContent = "Procesando...";
+    mostrarFeedback("", "");
+
+    try {
+        if (modoRecuperar) {
+            await sendPasswordResetEmail(auth, email);
+            mostrarFeedback("Correo de recuperación enviado. Revisa tu bandeja.", "exito");
+            setTimeout(() => {
+                modoRecuperar = false;
+                actualizarInterfaz();
+            }, 3000);
+        } else if (modoRegistro) {
+            const credencial = await createUserWithEmailAndPassword(auth, email, password);
+            await sendEmailVerification(credencial.user);
+            await signOut(auth);
+            mostrarFeedback("¡Cuenta creada! Revisa tu correo para verificarla antes de ingresar.", "exito");
+            setTimeout(() => {
+                modoRegistro = false;
+                actualizarInterfaz();
+            }, 3000);
         } else {
-            localStorage.removeItem("batitienda_usuario_recordado");
+            const credencial = await signInWithEmailAndPassword(auth, email, password);
+            if (!credencial.user.emailVerified) {
+                await signOut(auth);
+                mostrarFeedback("Debes verificar tu correo antes de ingresar.", "error");
+            } else {
+                mostrarFeedback("¡Ingreso exitoso!", "exito");
+            }
         }
+    } catch (error) {
+        let mensajeError = "Ocurrió un error. Intenta nuevamente.";
+        if (error.code === 'auth/email-already-in-use') mensajeError = "Este correo ya está registrado.";
+        if (error.code === 'auth/invalid-credential') mensajeError = "Correo o contraseña incorrectos.";
+        mostrarFeedback(mensajeError, "error");
     }
+    
+    botonIngresar.disabled = false;
+    if (modoRecuperar) botonIngresar.textContent = "Enviar correo";
+    else if (modoRegistro) botonIngresar.textContent = "Registrarse";
+    else botonIngresar.textContent = "Ingresar";
+}
 
-    //Si había un usuario recordado, se precarga al abrir la página
-    function precargarUsuarioRecordado() {
-        const usuarioGuardado = localStorage.getItem("batitienda_usuario_recordado");
-        if (usuarioGuardado) {
-            inputUsuario.value = usuarioGuardado;
-            checkRecordar.checked = true;
-        }
+async function manejarIngresoGoogle() {
+    const provider = new GoogleAuthProvider();
+    botonGoogle.disabled = true;
+    try {
+        await signInWithPopup(auth, provider);
+    } catch (error) {
+        mostrarFeedback("El inicio de sesión con Google fue cancelado o falló.", "error");
+        botonGoogle.disabled = false;
     }
+}
 
-    //Envío del formulario: valida, simula el ingreso y da feedback visual
-    function manejarEnvioLogin(evento) {
-        evento.preventDefault();
+botonTogglePassword.addEventListener("click", () => {
+    const esTexto = inputPassword.type === "text";
+    inputPassword.type = esTexto ? "password" : "text";
+    iconoTogglePassword.textContent = esTexto ? "visibility" : "visibility_off";
+});
 
-        if (!validarFormulario()) {
-            mostrarFeedback("Revisa los campos marcados en rojo", "error");
-            return;
-        }
+formularioLogin.addEventListener("submit", manejarEnvioLogin);
+botonGoogle.addEventListener("click", manejarIngresoGoogle);
+linkModo.addEventListener("click", alternarModoGlobal);
+linkRecuperar.addEventListener("click", activarRecuperacion);
 
-        manejarRecordarUsuario(inputUsuario.value.trim(), checkRecordar.checked);
-
-        botonIngresar.disabled = true;
-        botonIngresar.textContent = "Ingresando...";
-        mostrarFeedback("", "");
-
-        setTimeout(function () {
-            mostrarFeedback("¡Bienvenido a la Baticueva!", "exito");
-            window.location.href = "index.html";
-        }, 800);
-    }
-
-    botonTogglePassword.addEventListener("click", alternarVisibilidadPassword);
-    formularioLogin.addEventListener("submit", manejarEnvioLogin);
-
-    inputUsuario.addEventListener("input", function () {
-        mostrarError(inputUsuario, errorUsuario, "");
-    });
-    inputPassword.addEventListener("input", function () {
-        mostrarError(inputPassword, errorPassword, "");
-    });
-
-    precargarUsuarioRecordado();
-})();
+inputUsuario.addEventListener("input", () => mostrarError(inputUsuario, errorUsuario, ""));
+inputPassword.addEventListener("input", () => mostrarError(inputPassword, errorPassword, ""));
