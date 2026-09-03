@@ -160,7 +160,10 @@
 
 @media (max-width: 460px) {
     .login-card {
+        position: static;
+        transform: none;
         width: 90vw;
+        margin: 0 auto;
         padding: 24px 18px;
     }
 }
