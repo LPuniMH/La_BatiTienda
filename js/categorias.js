@@ -1,6 +1,6 @@
 const mapaCategorias = {
     "Figuras": {
-        codigos: ["FG001", "FG001", "SH001", "SH002", "SH003", "FP345", "FP346", "FP348"],
+        codigos: ["FG001", "FG001", "SH001", "SH002", "FP345", "FP346", "FP348"],
         titulo: "Figuras de Colección",
         descripcion: "Encuentra tus personajes favoritos con los mejores detalles."
     },
@@ -18,7 +18,7 @@ const mapaCategorias = {
     },
 
     "Libros": {
-        codigos: ["MG001", "MG003"],
+        codigos: ["SH003", "MG001", "MG003"],
         titulo: "Libros",
         descripcion: ""
     },
