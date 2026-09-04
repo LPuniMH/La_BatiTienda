@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte y contacto · La BatiTienda</title>
+
+    <!--CSS BOOTSRAP-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Symbols+Outlined">
+
+    <!--Estilos CSS-->
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <!--Estilos propios de esta página-->
+    <link rel="stylesheet" href="css/contacto.css">
+</head>
+
+<body>
+
+    <!-- Barra de Navegación -->
+    <div id="nav-batitienda"></div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="contenedor-principal">
+
+        <div class="contacto-encabezado">
+            <h1 class="h3 mb-1">Soporte y contacto</h1>
+            <p class="peque-desc mb-0">¿Tienes un problema con tu pedido o alguna duda? Cuéntanos y te respondemos a la brevedad.</p>
+        </div>
+
+        <div class="contacto-card">
+
+            <form class="contacto-form" id="contactoForm" novalidate>
+
+                <div class="row">
+                    <div class="col-md-6 mb-1 text-start">
+                        <label for="nombre" class="form-label contacto-label">Nombre completo</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control contacto-input"
+                            placeholder="Bruce Wayne" autocomplete="name">
+                        <p class="contacto-error" id="errorNombre"></p>
+                    </div>
+
+                    <div class="col-md-6 mb-1 text-start">
+                        <label for="correo" class="form-label contacto-label">Correo electrónico</label>
+                        <input type="email" id="correo" name="correo" class="form-control contacto-input"
+                            placeholder="bruce.wayne@wayneenterprises.com" autocomplete="email">
+                        <p class="contacto-error" id="errorCorreo"></p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-1 text-start">
+                        <label for="motivo" class="form-label contacto-label">Motivo de contacto</label>
+                        <select id="motivo" name="motivo" class="form-select contacto-input">
+                            <option value="" selected disabled>Selecciona un motivo</option>
+                            <option value="consulta">Consulta general</option>
+                            <option value="pedido">Estado de mi pedido</option>
+                            <option value="producto">Problema con un producto</option>
+                            <option value="reclamo">Reclamo</option>
+                            <option value="sugerencia">Sugerencia</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                        <p class="contacto-error" id="errorMotivo"></p>
+                    </div>
+
+                    <div class="col-md-6 mb-1 text-start">
+                        <label for="pedido" class="form-label contacto-label">N° de pedido</label>
+                        <input type="text" id="pedido" name="pedido" class="form-control contacto-input"
+                            placeholder="Ej: BT-00123">
+                        <p class="contacto-error" id="errorPedido"></p>
+                    </div>
+                </div>
+
+                <div class="mb-1 text-start">
+                    <label for="mensaje" class="form-label contacto-label">Cuéntanos qué pasó</label>
+                    <textarea id="mensaje" name="mensaje" class="form-control contacto-input contacto-textarea"
+                        rows="5" placeholder="Describe tu consulta o problema con el mayor detalle posible..."></textarea>
+                    <p class="contacto-error" id="errorMensaje"></p>
+                </div>
+
+                <p class="contacto-feedback" id="contactoFeedback"></p>
+
+                <button type="submit" class="btn w-100 contacto-btn" id="botonEnviar">Enviar mensaje</button>
+
+            </form>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-batitienda"></div>
+
+    <script src="js/contenedores.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/contacto.js"></script>
+
+</body>
+
+</html>
