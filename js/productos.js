@@ -29,7 +29,7 @@ const productos = [
         "nombre": "Lampara Kuromi",
         "marca": "Sanrio",
         "modelo": "Electronica",
-        "categoria": "Kuromi",
+        "categoria": "Electronica",
         "precio": 8990,
         "stock": 15,
         "descripcion": "Lampara recargable morada con figura de Kuromi.",
