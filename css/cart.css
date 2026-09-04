@@ -64,3 +64,102 @@
     display: inline-block;
     font-weight: bold;
 }
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--negro-solido);
+    border: 1px solid var(--morado-acento);
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.cart-item-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    border-radius: 4px;
+    margin-right: 15px;
+    background-color: var(--negro-translucido);
+}
+
+.cart-item-icono {
+    width: 64px;
+    height: 64px;
+    border-radius: 4px;
+    margin-right: 15px;
+    background: linear-gradient(135deg, var(--morado-acento), var(--negro-solido));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.cart-item-info {
+    flex-grow: 1;
+}
+
+.btn-eliminar-item {
+    background: none;
+    border: none;
+    color: #ff5c5c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.btn-eliminar-item:hover {
+    transform: scale(1.1);
+}
+
+.toast-container-fixed {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1050;
+    pointer-events: none;
+}
+
+.toast-custom {
+    background-color: var(--negro-solido);
+    color: var(--texto-principal);
+    border-left: 4px solid var(--amarillo-bat);
+    padding: 12px 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: auto;
+}
+
+.toast-custom.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.btn-toggle-cart {
+    background: none;
+    border: none;
+    color: var(--texto-principal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.btn-toggle-cart:hover {
+    transform: scale(1.1);
+    color: var(--amarillo-bat);
+}
+
+.btn-toggle-cart.agregado {
+    color: var(--amarillo-bat);
+}

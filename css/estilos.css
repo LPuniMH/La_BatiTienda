@@ -318,3 +318,98 @@ main {
     object-fit: cover;
     border-radius: 6px;
 }
+
+
+.btn-wishlist {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--negro-translucido);
+    border: 1px solid var(--morado-acento);
+    border-radius: 50%;
+    color: #ffffff;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s ease;
+}
+
+.btn-wishlist:hover,
+.btn-wishlist.active {
+    color: var(--amarillo-bat);
+    border-color: var(--amarillo-bat);
+    transform: scale(1.1);
+}
+
+.toast-container-fixed {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1050;
+    pointer-events: none;
+}
+
+.toast-custom {
+    background-color: var(--negro-solido);
+    color: var(--texto-principal);
+    border-left: 4px solid var(--amarillo-bat);
+    padding: 12px 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: auto;
+}
+
+.toast-custom.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.btn-agregado {
+    background-color: var(--negro-translucido);
+    color: var(--texto-principal);
+    border: 2px solid var(--amarillo-bat);
+}
+
+.btn-agregado:hover {
+    background-color: rgba(255, 92, 92, 0.1);
+    color: #ff5c5c;
+    border-color: #ff5c5c;
+}
+
+.card {
+    cursor: pointer;
+}
+
+.modal-content-custom {
+    border: 1px solid var(--morado-acento);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+
+.modal-img-producto {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--morado-acento), var(--negro-solido));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.modal-img-producto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-img-producto .card-icono {
+    font-size: 5rem;
+}
