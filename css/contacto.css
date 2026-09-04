@@ -1,0 +1,115 @@
+/* ===================== */
+/* Contacto/Soporte - La BatiTienda */
+/* Usa las variables de color definidas en css/estilos.css   */
+/* Todas las clases van prefijadas con "contacto-" para no   */
+/* chocar con nada de lo que ya agregaron los compañeros.    */
+/* ===================== */
+
+.contacto-encabezado {
+    background-color: var(--negro-translucido);
+    border: 1px solid var(--morado-acento);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    color: var(--texto-principal);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.contacto-encabezado h1 {
+    color: var(--amarillo-bat);
+}
+
+.contacto-encabezado .peque-desc {
+    color: var(--texto-principal);
+    opacity: 0.85;
+}
+
+.contacto-card {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    background-color: var(--negro-translucido);
+    border: 1px solid var(--amarillo-bat);
+    border-radius: 10px;
+    padding: 32px 28px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.contacto-label {
+    color: var(--amarillo-bat);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.contacto-input {
+    background-color: var(--negro-solido);
+    border: 1px solid var(--amarillo-bat);
+    color: var(--texto-principal);
+}
+
+.contacto-input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.contacto-input:focus {
+    background-color: var(--negro-solido);
+    border-color: var(--amarillo-bat);
+    color: var(--texto-principal);
+    box-shadow: 0 0 0 0.2rem rgba(245, 197, 0, 0.25);
+}
+
+/* Para que las opciones del <select> se lean bien sobre fondo oscuro */
+.contacto-input option {
+    background-color: var(--negro-solido);
+    color: var(--texto-principal);
+}
+
+.contacto-textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+.contacto-error {
+    color: #ff5c5c;
+    font-size: 0.8rem;
+    min-height: 1.1rem;
+    margin: 4px 0 0;
+    text-align: left;
+}
+
+.contacto-input.contacto-input-invalido {
+    border-color: #ff5c5c;
+}
+
+.contacto-feedback {
+    font-size: 0.85rem;
+    min-height: 1.1rem;
+    margin: 10px 0 0;
+}
+
+.contacto-feedback.contacto-feedback-exito {
+    color: var(--amarillo-hover);
+}
+
+.contacto-feedback.contacto-feedback-error {
+    color: #ff5c5c;
+}
+
+.contacto-btn {
+    margin-top: 16px;
+    background-color: var(--amarillo-bat);
+    color: var(--negro-solido);
+    font-weight: bold;
+    border: none;
+    padding: 10px;
+}
+
+.contacto-btn:hover {
+    background-color: var(--amarillo-hover);
+    color: var(--negro-solido);
+}
+
+.contacto-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
