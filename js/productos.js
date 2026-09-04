@@ -292,7 +292,7 @@ const productos = [
         "codigo": "OP647",
         "nombre": "Figura Hollow Knight",
         "marca": "Generico",
-        "modelo": "Figura",
+        "modelo": "Figuras",
         "categoria": "Figuras",
         "precio": 14990,
         "stock": 7,
