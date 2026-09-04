@@ -401,7 +401,7 @@ const productos = [
         "nombre": "Dark Vaider Pig",
         "marca": "Angry Birds",
         "modelo": " ",
-        "categoria": "Peluche",
+        "categoria": "Peluches",
         "precio": 11990,
         "stock": 6,
         "descripcion": "Peluche Dark Vaider de Angry Birds x StarWars de 20 cm",
