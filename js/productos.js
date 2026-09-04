@@ -394,6 +394,18 @@ const productos = [
         "stock": 4,
         "descripcion": "Attack on Titan: La última resistencia. Juego de mesa asimétrico y semi-cooperativo basado en el anime.",
         "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfVjFLS9pdhMNDciJbqCgczYOLfy0wcaOtsvncXPL0oXMdF4NIotsEnYHf&s=10"
+    },
+    {
+        "id": 100,
+        "codigo": "PL003",
+        "nombre": "Dark Vaider Pig",
+        "marca": "Angry Birds",
+        "modelo": " ",
+        "categoria": "Peluche",
+        "precio": 11990,
+        "stock": 6,
+        "descripcion": "Peluche Dark Vaider de Angry Birds x StarWars de 20 cm",
+        "imagen": "https://www.bigw.com.au/medias/sys_master/images/images/h38/h6a/120074336993310.jpg"
     }
     
 ];
