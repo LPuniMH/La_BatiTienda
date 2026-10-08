@@ -1,0 +1,145 @@
+body {
+    background-image: url('https://res.cloudinary.com/yhcvjnf8/image/upload/v1788290645/fondo_comic.webp'); 
+    background-repeat: no-repeat; 
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed; 
+    background-color: #cccccc; 
+}
+
+.site-header {
+    background-color: #F5C500 !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.max-width-container {
+    max-width: 1200px;
+}
+
+.main-logo-img {
+    width: 180px;
+    height: auto;
+    object-fit: contain;
+}
+
+.search-btn {
+    text-decoration: none;
+}
+
+.cart-btn {
+    border-width: 1px;
+    border-color: #000000;
+    font-size: 14px;
+}
+
+.cart-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #000000;
+}
+
+.cart-badge {
+    font-size: 10px;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.fila-categoria {
+    margin-bottom: 50px;
+}
+
+.fila-titulo {
+    display: inline-block;
+    background-color: var(--negro-translucido);
+    border: 1px solid var(--morado-acento);
+    border-radius: 8px;
+    padding: 10px 25px;
+    color: var(--amarillo-bat);
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .fila-titulo {
+        font-size: 1.2rem;
+        padding: 8px 15px;
+        margin-bottom: 15px;
+        display: block;
+        text-align: center;
+    }
+}
+
+.scroll-horizontal {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 25px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+.scroll-horizontal::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scroll-horizontal::-webkit-scrollbar-track {
+    background: var(--negro-translucido);
+    border-radius: 4px;
+}
+
+.scroll-horizontal::-webkit-scrollbar-thumb {
+    background: var(--morado-acento);
+    border-radius: 4px;
+}
+
+.scroll-horizontal > .card,
+.scroll-horizontal > .tarjeta-ver-mas {
+    flex: 0 0 260px !important;
+    min-width: 260px !important;
+    width: 260px !important;
+    scroll-snap-align: start;
+}
+
+.tarjeta-ver-mas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--negro-translucido);
+    border: 2px dashed var(--morado-acento);
+    border-radius: 10px;
+    color: var(--amarillo-bat);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.tarjeta-ver-mas:hover {
+    background-color: var(--morado-acento);
+    color: var(--texto-principal);
+    border-style: solid;
+    transform: translateY(-6px);
+}
+
+@media (max-width: 768px) {
+    .fila-titulo {
+        display: inline-block;
+        font-size: 1.2rem;
+        padding: 8px 15px;
+        margin-bottom: 15px;
+    }
+}
