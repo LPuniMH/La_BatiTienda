@@ -28,3 +28,16 @@ Una vez que todo esté instalado, levanta el proyecto con el siguiente comando:
 ```bash
 npm run dev
 ```
+
+### 4. Pruebas Unitarias
+Para ejecutar las pruebas unitarias, se debe ejecutar primero el siguiente comando para descargar lo necesario para Vitest:
+
+```bash
+npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event
+```
+
+Posteriormente se podrán testear utilizando este comando:
+
+```bash
+npm run test
+```
