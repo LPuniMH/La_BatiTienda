@@ -78,7 +78,7 @@ function Navbar({ usuarioActual, rol }) {
                 <li className="nav-item">
                     <Link className="nav-link" to="/categorias-grid">CATEGORÍAS</Link>
                 </li>
-                {rol === "admin" && (
+                {['admin', 'owner'].includes(rol) && (
                   <li className="nav-item">
                     <Link className="nav-link text-amarillo fw-bold" to="/admin">
                       <span className="material-symbols-outlined align-middle" style={{fontSize: '1.1rem', marginTop: '-3px'}}>admin_panel_settings</span> ADMIN

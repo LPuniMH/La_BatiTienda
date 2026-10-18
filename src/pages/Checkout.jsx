@@ -98,7 +98,7 @@ function Checkout({ usuarioActual }) {
         total: totalConDescuento,
         descuentoAplicado: porcentajeDescuento,
         fecha: new Date().toISOString(),
-        estado: 'Pendiente'
+        estado: 'Pagado'
       };
 
       const docRef = await addDoc(collection(db, "pedidos"), nuevoPedido);
