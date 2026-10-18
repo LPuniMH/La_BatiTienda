@@ -161,19 +161,8 @@ function Cart({ usuarioActual }) {
     }
   };
 
-  const hacerPedido = async () => {
-    if (!usuarioActual || carritoCodigos.length === 0) return;
-    setProcesandoPedido(true);
-    try {
-      await setDoc(doc(db, "usuarios", usuarioActual.uid), { carrito: [] }, { merge: true });
-      setPorcentajeDescuento(0);
-      setInputCupon('');
-      setMensajeCupon({ texto: '', tipo: '' });
-      mostrarToast("¡Compra realizada con éxito! Revisa tu correo.");
-    } catch (e) {
-      mostrarToast("Error al procesar la compra. Intenta de nuevo.");
-    }
-    setProcesandoPedido(false);
+  const hacerPedido = () => {
+    navigate('/checkout', { state: { porcentajeDescuento } });
   };
 
   const guardarNombre = async () => {
