@@ -29,15 +29,23 @@ Una vez que todo esté instalado, levanta el proyecto con el siguiente comando:
 npm run dev
 ```
 
-### 4. Pruebas Unitarias
-Para ejecutar las pruebas unitarias, se debe ejecutar primero el siguiente comando para descargar lo necesario para Vitest:
+### 4. Pruebas Unitarias y Cobertura (Testing)
+Para ejecutar las pruebas y generar los reportes de cobertura, instala Vitest y sus herramientas complementarias de simulación de DOM y eventos:
 
 ```bash
 npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event
 ```
 
-Posteriormente se podrán testear utilizando este comando:
+Para correr las pruebas en la consola de forma rápida:
 
 ```bash
 npm run test
 ```
+
+Para generar el reporte analítico con las métricas de cobertura global (Statements, Branches, Functions, Lines):
+
+```bash
+npm run coverage
+```
+
+Al ejecutar el comando de cobertura, se generará una carpeta coverage en la raíz del proyecto. Puedes abrir el archivo coverage/index.html en tu navegador para revisar los porcentajes detallados.
