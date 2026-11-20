@@ -51,10 +51,15 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     
+    // Mock de fetch para el microservicio de usuarios (ms-admin)
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => mockUsuarios
+    });
+
     // El mock detecta qué tabla está pidiendo el componente gracias al .path
     firestore.getDocs.mockImplementation(async (ref) => {
       const path = ref?.path;
-      if (path === 'usuarios') return { size: mockUsuarios.length, forEach: (cb) => mockUsuarios.forEach(u => cb({ id: u.id, data: () => u })) };
       if (path === 'pedidos') return { size: mockPedidos.length, forEach: (cb) => mockPedidos.forEach(p => cb({ id: p.id, data: () => p })) };
       return { size: mockProductos.length, forEach: (cb) => mockProductos.forEach(p => cb({ id: p.id, data: () => p })) };
     });
@@ -100,8 +105,8 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     expect(screen.getByRole('heading', { name: /Gestión de Usuarios/i })).toBeInTheDocument();
   });
 
-  it('4. Permite a un Owner cambiar el rol de un usuario', async () => {
-    const { container } = renderWithRouter(<Admin usuarioActual={{uid:'owner1'}} rol="owner" />);
+  it('4. Permite a un Owner cambiar el rol de un usuario vía microservicio', async () => {
+    const { container } = renderWithRouter(<Admin usuarioActual={{uid:'owner1', getIdToken: vi.fn().mockResolvedValue('jwt-test')}} rol="owner" />);
     
     await waitFor(() => clickTab(container, 4)); // Ir a usuarios
     
@@ -110,7 +115,15 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
       if(select) fireEvent.change(select, { target: { value: 'admin' } });
     });
     
-    expect(firestore.updateDoc).toHaveBeenCalled();
+    expect(global.fetch).toHaveBeenCalledWith(
+      'http://localhost:3001/api/usuarios/user1/rol',
+      expect.objectContaining({
+        method: 'PUT',
+        headers: expect.objectContaining({
+          'Authorization': 'Bearer jwt-test'
+        })
+      })
+    );
   });
 
   it('5. Permite cambiar el estado de un pedido', async () => {

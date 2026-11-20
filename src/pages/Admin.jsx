@@ -7,6 +7,8 @@ import {
 import { db } from '../firebase';
 import '../admin.css';
 
+const API_ADMIN_URL = import.meta.env.VITE_API_ADMIN_URL || 'http://localhost:3001';
+
 function ProductoRow({ producto, esNuevo, onGuardar, onEliminar }) {
   const [form, setForm] = useState(producto);
 
@@ -196,9 +198,16 @@ function Admin({ usuarioActual, rol }) {
       const docCat = await getDoc(doc(db, "configuracion", "categorias"));
       if (docCat.exists()) setCategorias(docCat.data());
 
-      const snapUsuarios = await getDocs(collection(db, "usuarios"));
-      const arrUsuarios = [];
-      snapUsuarios.forEach(doc => arrUsuarios.push({ id: doc.id, ...doc.data() }));
+      // Petición al Microservicio de Administración de Usuarios enviando el JWT
+      const token = usuarioActual.getIdToken ? await usuarioActual.getIdToken() : '';
+      const resUsuarios = await fetch(`${API_ADMIN_URL}/api/usuarios`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (!resUsuarios.ok) throw new Error("Error al obtener usuarios del microservicio");
+      const arrUsuarios = await resUsuarios.json();
       setListaUsuarios(arrUsuarios);
       setTotalUsuarios(arrUsuarios.length);
 
@@ -294,7 +303,18 @@ function Admin({ usuarioActual, rol }) {
 
   const cambiarRolUsuario = async (uid, nuevoRol) => {
     try {
-      await updateDoc(doc(db, "usuarios", uid), { rol: nuevoRol });
+      const token = usuarioActual.getIdToken ? await usuarioActual.getIdToken() : '';
+      const respuesta = await fetch(`${API_ADMIN_URL}/api/usuarios/${uid}/rol`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ rol: nuevoRol })
+      });
+
+      if (!respuesta.ok) throw new Error("Error al actualizar rol en el microservicio");
+
       setListaUsuarios(listaUsuarios.map(u => u.id === uid ? { ...u, rol: nuevoRol } : u));
       mostrarToast("Rol de usuario actualizado.");
     } catch (e) {
