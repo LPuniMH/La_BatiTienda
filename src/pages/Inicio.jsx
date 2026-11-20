@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router';
-import { collection, getDocs, doc, getDoc, setDoc, arrayUnion, arrayRemove, onSnapshot } from 'firebase/firestore';
+import { doc, setDoc, arrayUnion, arrayRemove, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
+
+const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
 
 function Inicio({ usuarioActual }) {
   const [productos, setProductos] = useState([]);
@@ -17,14 +19,16 @@ function Inicio({ usuarioActual }) {
   useEffect(() => {
     const cargarBaseDatos = async () => {
       try {
-        const docCat = await getDoc(doc(db, "configuracion", "categorias"));
-        if (docCat.exists()) setCategoriasNube(docCat.data());
-
-        const querySnapshot = await getDocs(collection(db, "productos"));
-        let arrProds = [];
-        querySnapshot.forEach((d) => arrProds.push(d.data()));
-        arrProds.sort((a, b) => a.id - b.id);
-        setProductos(arrProds);
+        const [resCat, resProd] = await Promise.all([
+          fetch(`${API_PRODUCTOS_URL}/api/categorias`),
+          fetch(`${API_PRODUCTOS_URL}/api/productos`)
+        ]);
+        if (resCat.ok) setCategoriasNube(await resCat.json());
+        if (resProd.ok) {
+          const arrProds = await resProd.json();
+          arrProds.sort((a, b) => a.id - b.id);
+          setProductos(arrProds);
+        }
       } catch (error) {
         console.error(error);
       }

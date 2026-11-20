@@ -51,20 +51,20 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     
-    // Mock de fetch para el microservicio de usuarios (ms-admin)
-    global.fetch = vi.fn().mockResolvedValue({
-      ok: true,
-      json: async () => mockUsuarios
+    // Mock de fetch para los microservicios de usuarios (ms-admin), ventas (ms-ventas) y productos (ms-productos)
+    global.fetch = vi.fn().mockImplementation(async (url) => {
+      const u = String(url);
+      if (u.includes('/api/productos')) {
+        return { ok: true, json: async () => mockProductos };
+      }
+      if (u.includes('/api/categorias')) {
+        return { ok: true, json: async () => mockCategorias };
+      }
+      if (u.includes('/api/ventas')) {
+        return { ok: true, json: async () => mockPedidos };
+      }
+      return { ok: true, json: async () => mockUsuarios };
     });
-
-    // El mock detecta qué tabla está pidiendo el componente gracias al .path
-    firestore.getDocs.mockImplementation(async (ref) => {
-      const path = ref?.path;
-      if (path === 'pedidos') return { size: mockPedidos.length, forEach: (cb) => mockPedidos.forEach(p => cb({ id: p.id, data: () => p })) };
-      return { size: mockProductos.length, forEach: (cb) => mockProductos.forEach(p => cb({ id: p.id, data: () => p })) };
-    });
-
-    firestore.getDoc.mockResolvedValue({ exists: () => true, data: () => mockCategorias });
   });
 
   // Función de apoyo para navegar entre pestañas de forma segura
@@ -126,8 +126,8 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     );
   });
 
-  it('5. Permite cambiar el estado de un pedido', async () => {
-    const { container } = renderWithRouter(<Admin usuarioActual={{uid:'admin1'}} rol="admin" />);
+  it('5. Permite cambiar el estado de un pedido vía microservicio', async () => {
+    const { container } = renderWithRouter(<Admin usuarioActual={{uid:'admin1', getIdToken: vi.fn().mockResolvedValue('jwt-test')}} rol="admin" />);
     
     await waitFor(() => clickTab(container, 1)); // Ir a órdenes
     
@@ -136,7 +136,15 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
       if(select) fireEvent.change(select, { target: { value: 'Enviado' } });
     });
     
-    expect(firestore.updateDoc).toHaveBeenCalled();
+    expect(global.fetch).toHaveBeenCalledWith(
+      'http://localhost:4000/api/ventas/ped1/estado',
+      expect.objectContaining({
+        method: 'PATCH',
+        headers: expect.objectContaining({
+          'Authorization': 'Bearer jwt-test'
+        })
+      })
+    );
   });
 
   it('6. Bloquea la creación de un producto si faltan datos obligatorios', async () => {
@@ -166,11 +174,14 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     });
     
     await waitFor(() => {
-      expect(firestore.setDoc).toHaveBeenCalled();
+      expect(global.fetch).toHaveBeenCalledWith(
+        'http://localhost:8081/api/productos',
+        expect.objectContaining({ method: 'POST' })
+      );
     });
   });
 
-  it('8. Actualiza un producto existente modificando su ID (Dispara Batch)', async () => {
+  it('8. Actualiza un producto existente modificando su ID vía microservicio', async () => {
     const { container } = renderWithRouter(<Admin usuarioActual={{uid:'admin1'}} rol="admin" />);
     await waitFor(() => clickTab(container, 2));
     
@@ -186,7 +197,10 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     fireEvent.click(btnActualizar);
     
     await waitFor(() => {
-      expect(firestore.writeBatch).toHaveBeenCalled(); 
+      expect(global.fetch).toHaveBeenCalledWith(
+        'http://localhost:8081/api/productos/1',
+        expect.objectContaining({ method: 'PUT' })
+      );
     });
   });
 
@@ -221,7 +235,10 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     fireEvent.click(container.querySelector('.modal .btn-danger'));
     
     await waitFor(() => {
-      expect(firestore.deleteDoc).toHaveBeenCalled();
+      expect(global.fetch).toHaveBeenCalledWith(
+        'http://localhost:8081/api/productos/1',
+        expect.objectContaining({ method: 'DELETE' })
+      );
     });
   });
 
@@ -240,7 +257,7 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     });
   });
 
-  it('12. Guarda las categorías globalmente en Firestore', async () => {
+  it('12. Guarda las categorías globalmente vía microservicio', async () => {
     const { container } = renderWithRouter(<Admin usuarioActual={{uid:'admin1'}} rol="admin" />);
     await waitFor(() => clickTab(container, 3));
     
@@ -249,7 +266,10 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     });
     
     await waitFor(() => {
-      expect(firestore.setDoc).toHaveBeenCalled();
+      expect(global.fetch).toHaveBeenCalledWith(
+        'http://localhost:8081/api/categorias',
+        expect.objectContaining({ method: 'PUT' })
+      );
     });
   });
 
@@ -281,7 +301,7 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
   });
 
   it('15. Captura errores de red al intentar cargar la base de datos', async () => {
-    firestore.getDocs.mockRejectedValueOnce(new Error("Error de red"));
+    global.fetch.mockRejectedValueOnce(new Error("Error de red"));
     renderWithRouter(<Admin usuarioActual={{uid:'admin1'}} rol="admin" />);
     
     await waitFor(() => {

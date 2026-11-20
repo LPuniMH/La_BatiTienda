@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase';
+
+const API_VENTAS_URL = import.meta.env.VITE_API_VENTAS_URL || 'http://localhost:4000';
 
 function PagoExitoso() {
   const { idPedido } = useParams();
   const [pedido, setPedido] = useState(null);
   const [cargando, setCargando] = useState(true);
+  const [descargandoPdf, setDescargandoPdf] = useState(false);
 
   useEffect(() => {
     if (!idPedido) {
@@ -14,19 +17,46 @@ function PagoExitoso() {
       return;
     }
 
-    const cargarPedido = async () => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        setCargando(false);
+        return;
+      }
       try {
-        const docSnap = await getDoc(doc(db, "pedidos", idPedido));
-        if (docSnap.exists()) {
-          setPedido(docSnap.data());
+        const token = user.getIdToken ? await user.getIdToken() : '';
+        const res = await fetch(`${API_VENTAS_URL}/api/ventas/${idPedido}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          setPedido(await res.json());
         }
       } catch (error) {
         console.error(error);
       }
       setCargando(false);
-    };
-    cargarPedido();
+    });
+
+    return () => unsubscribe();
   }, [idPedido]);
+
+  const abrirComprobantePdf = async () => {
+    if (!auth.currentUser || !idPedido) return;
+    setDescargandoPdf(true);
+    try {
+      const token = auth.currentUser.getIdToken ? await auth.currentUser.getIdToken() : '';
+      const res = await fetch(`${API_VENTAS_URL}/api/ventas/${idPedido}/comprobante.pdf`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setDescargandoPdf(false);
+  };
 
   if (cargando) {
     return (
@@ -88,7 +118,10 @@ function PagoExitoso() {
           </div>
         </div>
 
-        <div className="text-center mt-5">
+        <div className="text-center mt-5 d-flex justify-content-center gap-3 flex-wrap">
+          <button type="button" className="btn btn-outline-warning fw-bold px-4 py-2" onClick={abrirComprobantePdf} disabled={descargandoPdf}>
+            {descargandoPdf ? 'Generando PDF...' : 'Ver Comprobante PDF'}
+          </button>
           <Link to="/" className="btn btn-warning fw-bold px-5 py-2">Volver al inicio</Link>
         </div>
       </div>

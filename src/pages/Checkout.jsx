@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
-import { doc, getDoc, getDocs, collection, addDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import '../cart.css';
+
+const API_VENTAS_URL = import.meta.env.VITE_API_VENTAS_URL || 'http://localhost:4000';
+const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
 
 const regionesYComunas = {
   "Región Metropolitana": ["Cerrillos", "Providencia", "Santiago", "Maipú", "Ñuñoa", "Puente Alto"],
@@ -13,6 +16,7 @@ function Checkout({ usuarioActual }) {
   const navigate = useNavigate();
   const location = useLocation();
   const porcentajeDescuento = location.state?.porcentajeDescuento || 0;
+  const cupon = location.state?.cupon || '';
 
   const [productosNube, setProductosNube] = useState([]);
   const [carritoCodigos, setCarritoCodigos] = useState([]);
@@ -34,10 +38,10 @@ function Checkout({ usuarioActual }) {
 
     const cargarDatos = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "productos"));
-        let arr = [];
-        querySnapshot.forEach(d => arr.push(d.data()));
-        setProductosNube(arr);
+        const resProd = await fetch(`${API_PRODUCTOS_URL}/api/productos`);
+        if (resProd.ok) {
+          setProductosNube(await resProd.json());
+        }
 
         const docSnap = await getDoc(doc(db, "usuarios", usuarioActual.uid));
         if (docSnap.exists()) {
@@ -91,21 +95,27 @@ function Checkout({ usuarioActual }) {
     }
 
     try {
-      const nuevoPedido = {
-        uid: usuarioActual.uid,
-        cliente: form,
-        productos: carritoItems,
-        total: totalConDescuento,
-        descuentoAplicado: porcentajeDescuento,
-        fecha: new Date().toISOString(),
-        estado: 'Pagado'
-      };
+      const token = usuarioActual.getIdToken ? await usuarioActual.getIdToken() : '';
+      const respuesta = await fetch(`${API_VENTAS_URL}/api/ventas`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          cliente: form,
+          ...(cupon ? { cupon } : {})
+        })
+      });
 
-      const docRef = await addDoc(collection(db, "pedidos"), nuevoPedido);
-      await setDoc(doc(db, "usuarios", usuarioActual.uid), { carrito: [] }, { merge: true });
+      if (!respuesta.ok) {
+        throw new Error('Error al registrar la venta en el microservicio');
+      }
+
+      const ventaCreada = await respuesta.json();
       
       setTimeout(() => {
-        navigate(`/pago-exitoso/${docRef.id}`);
+        navigate(`/pago-exitoso/${ventaCreada.id}`);
       }, 1500);
 
     } catch (error) {

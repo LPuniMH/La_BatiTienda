@@ -7,16 +7,15 @@ import {
 } from 'firebase/auth';
 import { 
     doc, 
-    getDoc, 
     setDoc,
     arrayRemove,
     arrayUnion,
-    collection,
-    getDocs,
     onSnapshot
 } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import '../cart.css';
+
+const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
 
 function Cart({ usuarioActual }) {
   const navigate = useNavigate();
@@ -33,6 +32,7 @@ function Cart({ usuarioActual }) {
   const [mensajePassword, setMensajePassword] = useState({ texto: '', tipo: '' });
   
   const [inputCupon, setInputCupon] = useState('');
+  const [cuponAplicado, setCuponAplicado] = useState('');
   const [porcentajeDescuento, setPorcentajeDescuento] = useState(0);
   const [mensajeCupon, setMensajeCupon] = useState({ texto: '', tipo: '' });
   const [procesandoPedido, setProcesandoPedido] = useState(false);
@@ -57,10 +57,10 @@ function Cart({ usuarioActual }) {
 
     const cargarProductos = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "productos"));
-        let arr = [];
-        querySnapshot.forEach(d => arr.push(d.data()));
-        setProductosNube(arr);
+        const res = await fetch(`${API_PRODUCTOS_URL}/api/productos`);
+        if (res.ok) {
+          setProductosNube(await res.json());
+        }
       } catch (e) {
         console.error(e);
       }
@@ -104,14 +104,17 @@ function Cart({ usuarioActual }) {
     const cod = inputCupon.trim().toUpperCase();
     if (cod === "") {
       setPorcentajeDescuento(0);
+      setCuponAplicado('');
       setMensajeCupon({ texto: '', tipo: '' });
       return;
     }
     if (cuponesDisponibles[cod]) {
       setPorcentajeDescuento(cuponesDisponibles[cod]);
+      setCuponAplicado(cod);
       setMensajeCupon({ texto: `¡Cupón del ${cuponesDisponibles[cod]}% aplicado!`, tipo: 'exito' });
     } else {
       setPorcentajeDescuento(0);
+      setCuponAplicado('');
       setMensajeCupon({ texto: "Cupón inválido.", tipo: 'error' });
     }
   };
@@ -162,7 +165,7 @@ function Cart({ usuarioActual }) {
   };
 
   const hacerPedido = () => {
-    navigate('/checkout', { state: { porcentajeDescuento } });
+    navigate('/checkout', { state: { porcentajeDescuento, cupon: cuponAplicado } });
   };
 
   const guardarNombre = async () => {

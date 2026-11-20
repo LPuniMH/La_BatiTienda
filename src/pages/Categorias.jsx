@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+
+const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
 
 function Categorias() {
   const [categorias, setCategorias] = useState({});
@@ -10,9 +10,9 @@ function Categorias() {
   useEffect(() => {
     const cargarCategorias = async () => {
       try {
-        const docCat = await getDoc(doc(db, "configuracion", "categorias"));
-        if (docCat.exists()) {
-          setCategorias(docCat.data());
+        const res = await fetch(`${API_PRODUCTOS_URL}/api/categorias`);
+        if (res.ok) {
+          setCategorias(await res.json());
         }
       } catch (error) {
         console.error(error);

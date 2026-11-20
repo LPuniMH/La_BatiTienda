@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router';
-import { 
-    doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc,
-    collection, query, orderBy, writeBatch 
-} from 'firebase/firestore';
-import { db } from '../firebase';
 import '../admin.css';
 
 const API_ADMIN_URL = import.meta.env.VITE_API_ADMIN_URL || 'http://localhost:3001';
+const API_VENTAS_URL = import.meta.env.VITE_API_VENTAS_URL || 'http://localhost:4000';
+const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
 
 function ProductoRow({ producto, esNuevo, onGuardar, onEliminar }) {
   const [form, setForm] = useState(producto);
@@ -189,16 +186,18 @@ function Admin({ usuarioActual, rol }) {
   const cargarDatos = async () => {
     setCargando(true);
     try {
-      const qProductos = query(collection(db, "productos"), orderBy("id", "asc"));
-      const snapProductos = await getDocs(qProductos);
-      const prods = [];
-      snapProductos.forEach(doc => prods.push(doc.data()));
+      // 1. Petición al Microservicio de Productos y Categorías
+      const resProductos = await fetch(`${API_PRODUCTOS_URL}/api/productos`);
+      if (!resProductos.ok) throw new Error("Error al obtener productos del microservicio");
+      const prods = await resProductos.json();
       setProductos(prods);
 
-      const docCat = await getDoc(doc(db, "configuracion", "categorias"));
-      if (docCat.exists()) setCategorias(docCat.data());
+      const resCat = await fetch(`${API_PRODUCTOS_URL}/api/categorias`);
+      if (resCat.ok) {
+        setCategorias(await resCat.json());
+      }
 
-      // Petición al Microservicio de Administración de Usuarios enviando el JWT
+      // 2. Petición al Microservicio de Administración de Usuarios enviando el JWT
       const token = usuarioActual.getIdToken ? await usuarioActual.getIdToken() : '';
       const resUsuarios = await fetch(`${API_ADMIN_URL}/api/usuarios`, {
         method: 'GET',
@@ -211,12 +210,17 @@ function Admin({ usuarioActual, rol }) {
       setListaUsuarios(arrUsuarios);
       setTotalUsuarios(arrUsuarios.length);
 
-      const snapPedidos = await getDocs(collection(db, "pedidos"));
-      const arrPedidos = [];
+      // 3. Petición al Microservicio de Ventas enviando el JWT
+      const resPedidos = await fetch(`${API_VENTAS_URL}/api/ventas`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (!resPedidos.ok) throw new Error("Error al obtener pedidos del microservicio");
+      const arrPedidos = await resPedidos.json();
       let ventasAcumuladas = 0;
-      snapPedidos.forEach(doc => {
-        const data = doc.data();
-        arrPedidos.push({ id: doc.id, ...data });
+      arrPedidos.forEach(data => {
         ventasAcumuladas += data.total || 0;
       });
       
@@ -254,20 +258,26 @@ function Admin({ usuarioActual, rol }) {
     if (codRepetido) return mostrarToast("¡Error! Ya existe un artículo con ese Código.");
 
     try {
-      const docRef = doc(db, "productos", pId.toString());
+      const token = usuarioActual.getIdToken ? await usuarioActual.getIdToken() : '';
+      const url = esNuevo
+        ? `${API_PRODUCTOS_URL}/api/productos`
+        : `${API_PRODUCTOS_URL}/api/productos/${idOriginal}`;
+
+      const respuesta = await fetch(url, {
+        method: esNuevo ? 'POST' : 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(objFinal)
+      });
+
+      if (!respuesta.ok) throw new Error("Error al guardar producto en el microservicio");
+
       if (esNuevo) {
-        await setDoc(docRef, objFinal);
         mostrarToast("¡Producto añadido con éxito!");
         setNuevoProducto(nuevoProductoBase);
       } else {
-        if (idOriginal.toString() !== pId.toString()) {
-          const batch = writeBatch(db);
-          batch.delete(doc(db, "productos", idOriginal.toString()));
-          batch.set(docRef, objFinal);
-          await batch.commit();
-        } else {
-          await updateDoc(docRef, objFinal);
-        }
         mostrarToast("¡Producto actualizado correctamente!");
       }
       cargarDatos();
@@ -283,7 +293,16 @@ function Admin({ usuarioActual, rol }) {
   const guardarCategoriasGlobal = async () => {
     setGuardandoCat(true);
     try {
-      await setDoc(doc(db, "configuracion", "categorias"), categorias);
+      const token = usuarioActual.getIdToken ? await usuarioActual.getIdToken() : '';
+      const respuesta = await fetch(`${API_PRODUCTOS_URL}/api/categorias`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(categorias)
+      });
+      if (!respuesta.ok) throw new Error("Error al guardar categorías");
       mostrarToast("Categorías actualizadas.");
     } catch (error) {
       mostrarToast("Error al guardar.");
@@ -293,7 +312,17 @@ function Admin({ usuarioActual, rol }) {
 
   const cambiarEstadoPedido = async (idPedido, nuevoEstado) => {
     try {
-      await updateDoc(doc(db, "pedidos", idPedido), { estado: nuevoEstado });
+      const token = usuarioActual.getIdToken ? await usuarioActual.getIdToken() : '';
+      const respuesta = await fetch(`${API_VENTAS_URL}/api/ventas/${idPedido}/estado`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ estado: nuevoEstado })
+      });
+      if (!respuesta.ok) throw new Error("Error al actualizar estado en el microservicio");
+
       setListaOrdenes(listaOrdenes.map(p => p.id === idPedido ? { ...p, estado: nuevoEstado } : p));
       mostrarToast("Estado del pedido actualizado.");
     } catch (e) {
@@ -330,7 +359,14 @@ function Admin({ usuarioActual, rol }) {
     setModalBorrado({ visible: false, id: null, tipo: '', texto: '' });
     if (tipo === 'producto') {
       try {
-        await deleteDoc(doc(db, "productos", id.toString()));
+        const token = usuarioActual.getIdToken ? await usuarioActual.getIdToken() : '';
+        const respuesta = await fetch(`${API_PRODUCTOS_URL}/api/productos/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        if (!respuesta.ok) throw new Error("Error al eliminar producto");
         mostrarToast("Producto eliminado.");
         cargarDatos();
       } catch (error) {

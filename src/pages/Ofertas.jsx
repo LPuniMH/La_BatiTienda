@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { collection, getDocs, doc, setDoc, arrayUnion, arrayRemove, onSnapshot } from 'firebase/firestore';
+import { doc, setDoc, arrayUnion, arrayRemove, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
+
+const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
 
 function Ofertas({ usuarioActual }) {
   const [productos, setProductos] = useState([]);
@@ -11,11 +13,12 @@ function Ofertas({ usuarioActual }) {
   useEffect(() => {
     const cargarDatos = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "productos"));
-        let arrProds = [];
-        querySnapshot.forEach((d) => arrProds.push(d.data()));
-        const ofertas = arrProds.filter(p => p.precio > 15000).sort((a, b) => b.precio - a.precio);
-        setProductos(ofertas);
+        const res = await fetch(`${API_PRODUCTOS_URL}/api/productos`);
+        if (res.ok) {
+          const arrProds = await res.json();
+          const ofertas = arrProds.filter(p => p.precio > 15000).sort((a, b) => b.precio - a.precio);
+          setProductos(ofertas);
+        }
       } catch (error) {
         console.error(error);
       }
