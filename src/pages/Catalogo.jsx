@@ -5,6 +5,7 @@ import { db } from '../firebase';
 import ProductoCard from '../components/ProductoCard';
 import ProductoModal from '../components/ProductoModal';
 import ToastNotificacion from '../components/ToastNotificacion';
+import CargandoBox from '../components/CargandoBox';
 
 const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
 
@@ -14,6 +15,7 @@ function Catalogo({ usuarioActual }) {
 
   const [productos, setProductos] = useState([]);
   const [categoriasNube, setCategoriasNube] = useState({});
+  const [cargando, setCargando] = useState(true);
   const [carrito, setCarrito] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [toast, setToast] = useState({ visible: false, mensaje: '' });
@@ -47,6 +49,7 @@ function Catalogo({ usuarioActual }) {
       } catch (error) {
         console.error(error);
       }
+      setCargando(false);
     };
     
     setMinPrecio(parseInt(localStorage.getItem("batitienda_min_precio")) || 0);
@@ -213,19 +216,23 @@ function Catalogo({ usuarioActual }) {
           </div>
         </div>
 
-        <div id="contenedorProductos">
-          {productosFiltrados.map(prod => (
-            <ProductoCard
-              key={prod.codigo}
-              producto={prod}
-              enCarrito={carrito.includes(prod.codigo)}
-              enWishlist={wishlist.includes(prod.codigo)}
-              onSelect={setProductoModal}
-              onAlternarCarrito={alternarCarrito}
-              onAlternarWishlist={alternarWishlist}
-            />
-          ))}
-        </div>
+        {cargando ? (
+          <CargandoBox texto="Cargando catálogo..." />
+        ) : (
+          <div id="contenedorProductos">
+            {productosFiltrados.map(prod => (
+              <ProductoCard
+                key={prod.codigo}
+                producto={prod}
+                enCarrito={carrito.includes(prod.codigo)}
+                enWishlist={wishlist.includes(prod.codigo)}
+                onSelect={setProductoModal}
+                onAlternarCarrito={alternarCarrito}
+                onAlternarWishlist={alternarWishlist}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {modalFiltros && (

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
+import CargandoBox from '../components/CargandoBox';
 
 const API_VENTAS_URL = import.meta.env.VITE_API_VENTAS_URL || 'http://localhost:4000';
 
@@ -61,9 +62,7 @@ function PagoExitoso() {
   if (cargando) {
     return (
       <main className="cart-main max-width-container mx-auto px-3">
-        <div className="cart-content-box text-center py-5">
-          <h4 className="text-white fw-bold mb-0">Generando boleta segura...</h4>
-        </div>
+        <CargandoBox texto="Generando boleta segura..." />
       </main>
     );
   }

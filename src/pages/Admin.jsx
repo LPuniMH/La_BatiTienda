@@ -4,6 +4,7 @@ import AdminProductoRow from '../components/AdminProductoRow';
 import AdminCategoriaRow from '../components/AdminCategoriaRow';
 import ModalConfirmacion from '../components/ModalConfirmacion';
 import ToastNotificacion from '../components/ToastNotificacion';
+import CargandoBox from '../components/CargandoBox';
 import '../admin.css';
 
 const API_ADMIN_URL = import.meta.env.VITE_API_ADMIN_URL || 'http://localhost:3001';
@@ -452,7 +453,7 @@ function Admin({ usuarioActual, rol }) {
                 </div>
                 <div className="d-flex flex-column gap-4 pe-2" style={{ maxHeight: '65vh', overflowY: 'auto' }}>
                   {cargando ? (
-                    <div className="text-center py-5 text-white fw-bold">Cargando inventario...</div>
+                    <CargandoBox texto="Cargando inventario..." />
                   ) : productosFiltrados.length === 0 ? (
                     <div className="text-center py-5 text-white fw-bold">No se encontraron productos.</div>
                   ) : (
@@ -475,7 +476,7 @@ function Admin({ usuarioActual, rol }) {
                 </div>
                 <div className="d-flex flex-column gap-4 pe-2" style={{ maxHeight: '65vh', overflowY: 'auto' }}>
                   {cargando ? (
-                    <div className="text-center py-5 text-white fw-bold">Cargando categorías...</div>
+                    <CargandoBox texto="Cargando categorías..." />
                   ) : categoriasFiltradas.length === 0 ? (
                     <div className="text-center py-5 text-white fw-bold">No se encontraron categorías.</div>
                   ) : (

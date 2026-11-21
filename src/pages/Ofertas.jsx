@@ -3,11 +3,13 @@ import { doc, setDoc, arrayUnion, arrayRemove, onSnapshot } from 'firebase/fires
 import { db } from '../firebase';
 import ProductoCard from '../components/ProductoCard';
 import ToastNotificacion from '../components/ToastNotificacion';
+import CargandoBox from '../components/CargandoBox';
 
 const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
 
 function Ofertas({ usuarioActual }) {
   const [productos, setProductos] = useState([]);
+  const [cargando, setCargando] = useState(true);
   const [carrito, setCarrito] = useState([]);
   const [toast, setToast] = useState({ visible: false, mensaje: '' });
   const tiempoUltimoCarrito = useRef(0);
@@ -24,6 +26,7 @@ function Ofertas({ usuarioActual }) {
       } catch (error) {
         console.error(error);
       }
+      setCargando(false);
     };
     cargarDatos();
   }, []);
@@ -80,17 +83,21 @@ function Ofertas({ usuarioActual }) {
         <p className="mb-0 fs-5">Aplica el cupón <strong>HEROE20</strong> en tu carrito para hacer válido el <strong>20% de descuento</strong> en estos productos premium.</p>
       </div>
 
-      <div id="contenedorProductos">
-        {productos.map(prod => (
-          <ProductoCard
-            key={prod.codigo}
-            producto={prod}
-            enCarrito={carrito.includes(prod.codigo)}
-            esOferta={true}
-            onAlternarCarrito={alternarCarrito}
-          />
-        ))}
-      </div>
+      {cargando ? (
+        <CargandoBox texto="Cargando ofertas..." />
+      ) : (
+        <div id="contenedorProductos">
+          {productos.map(prod => (
+            <ProductoCard
+              key={prod.codigo}
+              producto={prod}
+              enCarrito={carrito.includes(prod.codigo)}
+              esOferta={true}
+              onAlternarCarrito={alternarCarrito}
+            />
+          ))}
+        </div>
+      )}
 
       <ToastNotificacion toast={toast} />
     </div>

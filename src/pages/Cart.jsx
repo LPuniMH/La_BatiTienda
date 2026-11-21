@@ -16,6 +16,7 @@ import { auth, db } from '../firebase';
 import CartItemRow from '../components/CartItemRow';
 import ModalConfirmacion from '../components/ModalConfirmacion';
 import ToastNotificacion from '../components/ToastNotificacion';
+import CargandoBox from '../components/CargandoBox';
 import '../cart.css';
 
 const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
@@ -25,6 +26,7 @@ function Cart({ usuarioActual }) {
   
   const [seccionActiva, setSeccionActiva] = useState('carrito');
   const [productosNube, setProductosNube] = useState([]);
+  const [cargandoProductos, setCargandoProductos] = useState(true);
   const [carritoCodigos, setCarritoCodigos] = useState([]);
   const [wishlistCodigos, setWishlistCodigos] = useState([]);
   
@@ -67,6 +69,7 @@ function Cart({ usuarioActual }) {
       } catch (e) {
         console.error(e);
       }
+      setCargandoProductos(false);
     };
     cargarProductos();
 
@@ -280,7 +283,9 @@ function Cart({ usuarioActual }) {
               <div className="cart-content-box">
                 <h2 className="h5 mb-4 text-amarillo fw-bold">Carrito de Compras</h2>
                 <div className="d-flex flex-column gap-3 mb-4">
-                  {carritoCodigos.length === 0 ? (
+                  {cargandoProductos ? (
+                    <CargandoBox texto="Cargando carrito..." />
+                  ) : carritoCodigos.length === 0 ? (
                     <div className="text-center py-5">
                       <span className="material-symbols-outlined display-1 text-white fw-bold mb-3">shopping_cart</span>
                       <p className="text-white fw-bold">Tu carrito está vacío de momento.</p>
@@ -326,7 +331,9 @@ function Cart({ usuarioActual }) {
               <div className="cart-content-box">
                 <h2 className="h5 mb-4 text-amarillo fw-bold">Lista de Deseos</h2>
                 <div className="d-flex flex-column gap-3">
-                  {wishlistCodigos.length === 0 ? (
+                  {cargandoProductos ? (
+                    <CargandoBox texto="Cargando lista de deseos..." />
+                  ) : wishlistCodigos.length === 0 ? (
                     <div className="text-center py-5">
                       <span className="material-symbols-outlined display-1 text-white fw-bold mb-3">star</span>
                       <p className="text-white fw-bold">Tu lista de deseos está vacía de momento.</p>

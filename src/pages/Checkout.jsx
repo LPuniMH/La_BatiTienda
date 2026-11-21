@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import CargandoBox from '../components/CargandoBox';
 import '../cart.css';
 
 const API_VENTAS_URL = import.meta.env.VITE_API_VENTAS_URL || 'http://localhost:4000';
@@ -127,9 +128,7 @@ function Checkout({ usuarioActual }) {
   if (cargando) {
     return (
       <main className="cart-main max-width-container mx-auto px-3">
-        <div className="cart-content-box text-center py-5">
-          <h4 className="text-white fw-bold mb-0">Cargando información segura...</h4>
-        </div>
+        <CargandoBox texto="Cargando información segura..." />
       </main>
     );
   }

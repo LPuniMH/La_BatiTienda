@@ -5,12 +5,14 @@ import { db } from '../firebase';
 import ProductoCard from '../components/ProductoCard';
 import ProductoModal from '../components/ProductoModal';
 import ToastNotificacion from '../components/ToastNotificacion';
+import CargandoBox from '../components/CargandoBox';
 
 const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
 
 function Inicio({ usuarioActual }) {
   const [productos, setProductos] = useState([]);
   const [categoriasNube, setCategoriasNube] = useState({});
+  const [cargando, setCargando] = useState(true);
   const [carrito, setCarrito] = useState([]);
   const [wishlist, setWishlist] = useState([]);
   const [toast, setToast] = useState({ visible: false, mensaje: '' });
@@ -35,6 +37,7 @@ function Inicio({ usuarioActual }) {
       } catch (error) {
         console.error(error);
       }
+      setCargando(false);
     };
     cargarBaseDatos();
   }, []);
@@ -169,16 +172,22 @@ function Inicio({ usuarioActual }) {
   return (
     <>
       <div className="contenedor-principal" id="contenedorInicio">
-        {novedades.length > 0 && renderFila("Novedades", novedades, "/catalogo")}
-        
-        {llavesOrdenadas.map(nombreCategoria => {
-          const datosCategoria = categoriasNube[nombreCategoria];
-          const productosDeCategoria = productos.filter(p => datosCategoria.codigos.includes(p.codigo));
-          if (productosDeCategoria.length === 0) return null;
-          
-          const productosMostrar = mezclarArray(productosDeCategoria).slice(0, 5);
-          return renderFila(datosCategoria.titulo, productosMostrar, `/catalogo?cat=${nombreCategoria}`);
-        })}
+        {cargando ? (
+          <CargandoBox texto="Cargando tienda..." />
+        ) : (
+          <>
+            {novedades.length > 0 && renderFila("Novedades", novedades, "/catalogo")}
+            
+            {llavesOrdenadas.map(nombreCategoria => {
+              const datosCategoria = categoriasNube[nombreCategoria];
+              const productosDeCategoria = productos.filter(p => datosCategoria.codigos.includes(p.codigo));
+              if (productosDeCategoria.length === 0) return null;
+              
+              const productosMostrar = mezclarArray(productosDeCategoria).slice(0, 5);
+              return renderFila(datosCategoria.titulo, productosMostrar, `/catalogo?cat=${nombreCategoria}`);
+            })}
+          </>
+        )}
       </div>
 
       <ProductoModal

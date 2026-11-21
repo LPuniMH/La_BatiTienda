@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
+import CargandoBox from '../components/CargandoBox';
 
 const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
 
@@ -29,7 +30,13 @@ function Categorias() {
     return (idxA === -1 ? 999 : idxA) - (idxB === -1 ? 999 : idxB);
   });
 
-  if (cargando) return <div className="contenedor-principal text-center py-5 text-white">Cargando categorías...</div>;
+  if (cargando) {
+    return (
+      <div className="contenedor-principal">
+        <CargandoBox texto="Cargando categorías..." />
+      </div>
+    );
+  }
 
   return (
     <div className="contenedor-principal">
