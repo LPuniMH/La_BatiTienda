@@ -310,6 +310,12 @@ main {
 .btn-agregar:hover {
     background-color: var(--amarillo-hover);
 }
+.btn-agregar:disabled {
+    background-color: #444444;
+    color: #aaaaaa;
+    cursor: not-allowed;
+    opacity: 0.75;
+}
 
 
 .card-img {

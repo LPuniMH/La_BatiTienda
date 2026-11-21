@@ -50,8 +50,16 @@ function Ofertas({ usuarioActual }) {
     tiempoUltimoCarrito.current = ahora;
 
     const docRef = doc(db, "usuarios", usuarioActual.uid);
+    const estaAgregado = carrito.includes(codigo);
+    if (!estaAgregado) {
+      const prod = productos.find(p => p.codigo === codigo);
+      if (prod && prod.stock <= 0) {
+        return mostrarToast("Este producto está agotado.");
+      }
+    }
+
     try {
-      if (carrito.includes(codigo)) {
+      if (estaAgregado) {
         await setDoc(docRef, { carrito: arrayRemove(codigo) }, { merge: true });
         mostrarToast("Producto eliminado del carrito.");
       } else {
@@ -93,8 +101,12 @@ function Ofertas({ usuarioActual }) {
                 <span className="text-decoration-line-through small fw-bold" style={{ color: '#dcb4ff' }}>Precio normal: ${prod.precio}</span>
                 <span className="card-precio text-warning fs-4 fw-bold">Aprox. ${precioConDescuento}</span>
               </div>
-              <button className={`btn-agregar mt-3 ${enCarrito ? 'btn-agregado' : 'btn-warning text-dark'}`} onClick={(e) => alternarCarrito(e, prod.codigo)}>
-                {enCarrito ? 'Quitar del carrito' : 'Aprovechar Oferta'}
+              <button
+                className={`btn-agregar mt-3 ${enCarrito ? 'btn-agregado' : 'btn-warning text-dark'}`}
+                onClick={(e) => alternarCarrito(e, prod.codigo)}
+                disabled={!enCarrito && prod.stock <= 0}
+              >
+                {enCarrito ? 'Quitar del carrito' : prod.stock <= 0 ? 'Sin stock' : 'Aprovechar Oferta'}
               </button>
             </div>
           );

@@ -138,6 +138,13 @@ function Cart({ usuarioActual }) {
     tiempoUltimoCarrito.current = ahora;
     
     const yaEsta = carritoCodigos.includes(codigo);
+    if (!yaEsta) {
+      const prod = productosNube.find(p => p.codigo === codigo);
+      if (prod && prod.stock <= 0) {
+        return mostrarToast("Este producto está agotado.");
+      }
+    }
+
     try {
       if (yaEsta) {
         await setDoc(doc(db, "usuarios", usuarioActual.uid), { carrito: arrayRemove(codigo) }, { merge: true });
@@ -165,6 +172,13 @@ function Cart({ usuarioActual }) {
   };
 
   const hacerPedido = () => {
+    const hayAgotados = carritoCodigos.some(cod => {
+      const prod = productosNube.find(p => p.codigo === cod);
+      return prod && prod.stock <= 0;
+    });
+    if (hayAgotados) {
+      return mostrarToast("Elimina los productos agotados del carrito antes de continuar.");
+    }
     navigate('/checkout', { state: { porcentajeDescuento, cupon: cuponAplicado } });
   };
 
@@ -277,7 +291,10 @@ function Cart({ usuarioActual }) {
                           {prod.imagen ? <img src={prod.imagen} alt={prod.nombre} className="cart-item-img" /> : <div className="cart-item-icono">{prod.nombre.charAt(0).toUpperCase()}</div>}
                           <div className="cart-item-info">
                             <h4 className="h6 mb-1 text-white fw-bold">{prod.nombre}</h4>
-                            <p className="mb-0 text-amarillo fw-bold">${prod.precio}</p>
+                            <p className="mb-0 text-amarillo fw-bold">
+                              ${prod.precio}
+                              {prod.stock <= 0 && <span className="badge bg-danger ms-2">Sin stock</span>}
+                            </p>
                           </div>
                           <button className="btn-eliminar-item" onClick={() => eliminarDeCarrito(codigo)}>
                             <span className="material-symbols-outlined">delete</span>
@@ -328,7 +345,10 @@ function Cart({ usuarioActual }) {
                           {prod.imagen ? <img src={prod.imagen} alt={prod.nombre} className="cart-item-img" /> : <div className="cart-item-icono">{prod.nombre.charAt(0).toUpperCase()}</div>}
                           <div className="cart-item-info">
                             <h4 className="h6 mb-1 text-white fw-bold">{prod.nombre}</h4>
-                            <p className="mb-0 text-amarillo fw-bold">${prod.precio}</p>
+                            <p className="mb-0 text-amarillo fw-bold">
+                              ${prod.precio}
+                              {prod.stock <= 0 && <span className="badge bg-danger ms-2">Sin stock</span>}
+                            </p>
                           </div>
                           <button className={`btn-toggle-cart ${enCarrito ? 'agregado' : ''}`} onClick={() => alternarCarritoDesdeWishlist(codigo)}>
                             <span className="material-symbols-outlined">shopping_cart</span>

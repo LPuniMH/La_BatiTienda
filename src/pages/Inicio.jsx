@@ -82,6 +82,13 @@ function Inicio({ usuarioActual }) {
     const docRef = doc(db, "usuarios", usuarioActual.uid);
     const estaAgregado = carrito.includes(codigo);
 
+    if (!estaAgregado) {
+      const prod = productos.find(p => p.codigo === codigo);
+      if (prod && prod.stock <= 0) {
+        return mostrarToast("Este producto está agotado.");
+      }
+    }
+
     try {
       if (estaAgregado) {
         await setDoc(docRef, { carrito: arrayRemove(codigo) }, { merge: true });
@@ -145,11 +152,15 @@ function Inicio({ usuarioActual }) {
         <div className="card-footer">
           <span className="card-precio">${prod.precio}</span>
           <span className={`card-stock ${prod.stock <= 5 ? "stock-bajo" : ""}`}>
-            {prod.stock <= 5 ? "¡Últimas unidades!" : `Stock: ${prod.stock}`}
+            {prod.stock <= 0 ? "Agotado" : prod.stock <= 5 ? "¡Últimas unidades!" : `Stock: ${prod.stock}`}
           </span>
         </div>
-        <button className={`btn-agregar ${enCarrito ? 'btn-agregado' : ''}`} onClick={(e) => alternarCarrito(e, prod.codigo)}>
-          {enCarrito ? 'Quitar del carrito' : 'Agregar al carrito'}
+        <button
+          className={`btn-agregar ${enCarrito ? 'btn-agregado' : ''}`}
+          onClick={(e) => alternarCarrito(e, prod.codigo)}
+          disabled={!enCarrito && prod.stock <= 0}
+        >
+          {enCarrito ? 'Quitar del carrito' : prod.stock <= 0 ? 'Sin stock' : 'Agregar al carrito'}
         </button>
       </div>
     );
@@ -227,10 +238,14 @@ function Inicio({ usuarioActual }) {
                       <p className="flex-grow-1">{productoModal.descripcion}</p>
                       <div className="mt-auto">
                         <p className={`small mb-2 ${productoModal.stock <= 5 ? "text-danger fw-bold" : ""}`}>
-                          Stock disponible: {productoModal.stock}
+                          {productoModal.stock <= 0 ? "Producto agotado" : `Stock disponible: ${productoModal.stock}`}
                         </p>
-                        <button className={`btn-agregar w-100 ${carrito.includes(productoModal.codigo) ? 'btn-agregado' : ''}`} onClick={(e) => alternarCarrito(e, productoModal.codigo)}>
-                          {carrito.includes(productoModal.codigo) ? 'Quitar del carrito' : 'Agregar al carrito'}
+                        <button
+                          className={`btn-agregar w-100 ${carrito.includes(productoModal.codigo) ? 'btn-agregado' : ''}`}
+                          onClick={(e) => alternarCarrito(e, productoModal.codigo)}
+                          disabled={!carrito.includes(productoModal.codigo) && productoModal.stock <= 0}
+                        >
+                          {carrito.includes(productoModal.codigo) ? 'Quitar del carrito' : productoModal.stock <= 0 ? 'Sin stock' : 'Agregar al carrito'}
                         </button>
                       </div>
                     </div>
