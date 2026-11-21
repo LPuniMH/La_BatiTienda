@@ -116,7 +116,7 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     });
     
     expect(global.fetch).toHaveBeenCalledWith(
-      'http://localhost:3001/api/usuarios/user1/rol',
+      expect.stringContaining('/api/usuarios/user1/rol'),
       expect.objectContaining({
         method: 'PUT',
         headers: expect.objectContaining({
@@ -137,7 +137,7 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     });
     
     expect(global.fetch).toHaveBeenCalledWith(
-      'http://localhost:4000/api/ventas/ped1/estado',
+      expect.stringContaining('/api/ventas/ped1/estado'),
       expect.objectContaining({
         method: 'PATCH',
         headers: expect.objectContaining({
@@ -175,7 +175,7 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8081/api/productos',
+        expect.stringContaining('/api/productos'),
         expect.objectContaining({ method: 'POST' })
       );
     });
@@ -198,7 +198,7 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8081/api/productos/1',
+        expect.stringContaining('/api/productos/1'),
         expect.objectContaining({ method: 'PUT' })
       );
     });
@@ -236,7 +236,7 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8081/api/productos/1',
+        expect.stringContaining('/api/productos/1'),
         expect.objectContaining({ method: 'DELETE' })
       );
     });
@@ -267,7 +267,7 @@ describe('Pruebas masivas del componente Admin.jsx', () => {
     
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
-        'http://localhost:8081/api/categorias',
+        expect.stringContaining('/api/categorias'),
         expect.objectContaining({ method: 'PUT' })
       );
     });

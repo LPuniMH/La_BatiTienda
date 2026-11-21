@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { doc, setDoc, arrayUnion, arrayRemove, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
+import ProductoCard from '../components/ProductoCard';
+import ToastNotificacion from '../components/ToastNotificacion';
 
 const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
 
@@ -79,46 +81,18 @@ function Ofertas({ usuarioActual }) {
       </div>
 
       <div id="contenedorProductos">
-        {productos.map(prod => {
-          const enCarrito = carrito.includes(prod.codigo);
-          const precioConDescuento = Math.trunc(prod.precio * 0.8);
-
-          return (
-            <div className="card border-warning" key={prod.codigo}>
-              <div className="card-visual">
-                <div className="position-absolute top-0 start-0 bg-danger text-white px-2 py-1 m-2 rounded fw-bold shadow" style={{zIndex: 10}}>
-                  -20% OFF
-                </div>
-                {prod.imagen ? (
-                  <img src={prod.imagen} alt={prod.nombre} className="card-img" />
-                ) : (
-                  <span className="card-icono">{prod.nombre.charAt(0).toUpperCase()}</span>
-                )}
-              </div>
-              <h3 className="card-titulo mt-3">{prod.nombre}</h3>
-              <hr className="card-divisor" />
-              <div className="card-footer flex-column align-items-start gap-1">
-                <span className="text-decoration-line-through small fw-bold" style={{ color: '#dcb4ff' }}>Precio normal: ${prod.precio}</span>
-                <span className="card-precio text-warning fs-4 fw-bold">Aprox. ${precioConDescuento}</span>
-              </div>
-              <button
-                className={`btn-agregar mt-3 ${enCarrito ? 'btn-agregado' : 'btn-warning text-dark'}`}
-                onClick={(e) => alternarCarrito(e, prod.codigo)}
-                disabled={!enCarrito && prod.stock <= 0}
-              >
-                {enCarrito ? 'Quitar del carrito' : prod.stock <= 0 ? 'Sin stock' : 'Aprovechar Oferta'}
-              </button>
-            </div>
-          );
-        })}
+        {productos.map(prod => (
+          <ProductoCard
+            key={prod.codigo}
+            producto={prod}
+            enCarrito={carrito.includes(prod.codigo)}
+            esOferta={true}
+            onAlternarCarrito={alternarCarrito}
+          />
+        ))}
       </div>
 
-      <div className="toast-container-fixed">
-        <div className={`toast-custom d-flex align-items-center ${toast.visible ? 'show' : ''}`}>
-          <span className="material-symbols-outlined me-2 text-amarillo">info</span>
-          <span>{toast.mensaje}</span>
-        </div>
-      </div>
+      <ToastNotificacion toast={toast} />
     </div>
   );
 }

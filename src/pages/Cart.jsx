@@ -13,6 +13,9 @@ import {
     onSnapshot
 } from 'firebase/firestore';
 import { auth, db } from '../firebase';
+import CartItemRow from '../components/CartItemRow';
+import ModalConfirmacion from '../components/ModalConfirmacion';
+import ToastNotificacion from '../components/ToastNotificacion';
 import '../cart.css';
 
 const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
@@ -287,19 +290,12 @@ function Cart({ usuarioActual }) {
                       const prod = productosNube.find(p => p.codigo === codigo);
                       if (!prod) return null;
                       return (
-                        <div className="cart-item" key={`cart-${codigo}`}>
-                          {prod.imagen ? <img src={prod.imagen} alt={prod.nombre} className="cart-item-img" /> : <div className="cart-item-icono">{prod.nombre.charAt(0).toUpperCase()}</div>}
-                          <div className="cart-item-info">
-                            <h4 className="h6 mb-1 text-white fw-bold">{prod.nombre}</h4>
-                            <p className="mb-0 text-amarillo fw-bold">
-                              ${prod.precio}
-                              {prod.stock <= 0 && <span className="badge bg-danger ms-2">Sin stock</span>}
-                            </p>
-                          </div>
-                          <button className="btn-eliminar-item" onClick={() => eliminarDeCarrito(codigo)}>
-                            <span className="material-symbols-outlined">delete</span>
-                          </button>
-                        </div>
+                        <CartItemRow
+                          key={`cart-${codigo}`}
+                          producto={prod}
+                          mostrarEstadoStock={true}
+                          onEliminar={eliminarDeCarrito}
+                        />
                       );
                     })
                   )}
@@ -341,22 +337,13 @@ function Cart({ usuarioActual }) {
                       if (!prod) return null;
                       const enCarrito = carritoCodigos.includes(codigo);
                       return (
-                        <div className="cart-item" key={`wish-${codigo}`}>
-                          {prod.imagen ? <img src={prod.imagen} alt={prod.nombre} className="cart-item-img" /> : <div className="cart-item-icono">{prod.nombre.charAt(0).toUpperCase()}</div>}
-                          <div className="cart-item-info">
-                            <h4 className="h6 mb-1 text-white fw-bold">{prod.nombre}</h4>
-                            <p className="mb-0 text-amarillo fw-bold">
-                              ${prod.precio}
-                              {prod.stock <= 0 && <span className="badge bg-danger ms-2">Sin stock</span>}
-                            </p>
-                          </div>
-                          <button className={`btn-toggle-cart ${enCarrito ? 'agregado' : ''}`} onClick={() => alternarCarritoDesdeWishlist(codigo)}>
-                            <span className="material-symbols-outlined">shopping_cart</span>
-                          </button>
-                          <button className="btn-eliminar-item ms-2" onClick={() => eliminarDeWishlist(codigo)}>
-                            <span className="material-symbols-outlined">delete</span>
-                          </button>
-                        </div>
+                        <CartItemRow
+                          key={`wish-${codigo}`}
+                          producto={prod}
+                          enCarrito={enCarrito}
+                          onAlternarCarrito={alternarCarritoDesdeWishlist}
+                          onEliminar={eliminarDeWishlist}
+                        />
                       );
                     })
                   )}
@@ -415,61 +402,29 @@ function Cart({ usuarioActual }) {
         </div>
       </main>
 
-      {modalBorrar1 && (
-        <>
-          <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
-            <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content bg-dark text-white border-danger">
-                <div className="modal-header border-secondary">
-                  <h5 className="modal-title text-danger fw-bold">Eliminar Cuenta</h5>
-                  <button type="button" className="btn-close btn-close-white" onClick={() => setModalBorrar1(false)}></button>
-                </div>
-                <div className="modal-body">
-                  <p>¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer y perderás todos tus datos.</p>
-                </div>
-                <div className="modal-footer border-secondary">
-                  <button type="button" className="btn btn-secondary" onClick={() => setModalBorrar1(false)}>Cancelar</button>
-                  <button type="button" className="btn btn-danger fw-bold" onClick={() => { setModalBorrar1(false); setModalBorrar2(true); }}>Sí, estoy seguro</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="modal-backdrop fade show"></div>
-        </>
-      )}
+      <ModalConfirmacion
+        visible={modalBorrar1}
+        titulo="Eliminar Cuenta"
+        textoConfirmar="Sí, estoy seguro"
+        onCancelar={() => setModalBorrar1(false)}
+        onConfirmar={() => { setModalBorrar1(false); setModalBorrar2(true); }}
+      >
+        <p>¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer y perderás todos tus datos.</p>
+      </ModalConfirmacion>
 
-      {modalBorrar2 && (
-        <>
-          <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
-            <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content bg-dark text-white border-danger">
-                <div className="modal-header border-secondary">
-                  <h5 className="modal-title text-danger fw-bold">Confirmación Final</h5>
-                  <button type="button" className="btn-close btn-close-white" onClick={() => setModalBorrar2(false)}></button>
-                </div>
-                <div className="modal-body">
-                  <p>Para confirmar la eliminación permanente de tu cuenta, haz clic en "Borrar definitivamente". Serás redirigido al inicio.</p>
-                  <p className="small text-danger fw-bold">{errorBorrado}</p>
-                </div>
-                <div className="modal-footer border-secondary">
-                  <button type="button" className="btn btn-secondary" onClick={() => setModalBorrar2(false)}>Cancelar</button>
-                  <button type="button" className="btn btn-danger fw-bold" onClick={borrarCuentaDefinitivo} disabled={borrando}>
-                    {borrando ? "Borrando..." : "Borrar definitivamente"}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="modal-backdrop fade show"></div>
-        </>
-      )}
+      <ModalConfirmacion
+        visible={modalBorrar2}
+        titulo="Confirmación Final"
+        textoConfirmar={borrando ? 'Borrando...' : 'Borrar definitivamente'}
+        deshabilitado={borrando}
+        onCancelar={() => setModalBorrar2(false)}
+        onConfirmar={borrarCuentaDefinitivo}
+      >
+        <p>Para confirmar la eliminación permanente de tu cuenta, haz clic en "Borrar definitivamente". Serás redirigido al inicio.</p>
+        <p className="small text-danger fw-bold">{errorBorrado}</p>
+      </ModalConfirmacion>
 
-      <div className="toast-container-fixed">
-        <div className={`toast-custom d-flex align-items-center ${toast.visible ? 'show' : ''}`}>
-          <span className="material-symbols-outlined me-2 text-amarillo">info</span>
-          <span>{toast.mensaje}</span>
-        </div>
-      </div>
+      <ToastNotificacion toast={toast} />
     </>
   );
 }

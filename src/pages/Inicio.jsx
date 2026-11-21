@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { doc, setDoc, arrayUnion, arrayRemove, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase';
+import ProductoCard from '../components/ProductoCard';
+import ProductoModal from '../components/ProductoModal';
+import ToastNotificacion from '../components/ToastNotificacion';
 
 const API_PRODUCTOS_URL = import.meta.env.VITE_API_PRODUCTOS_URL || 'http://localhost:8081';
 
@@ -128,43 +131,17 @@ function Inicio({ usuarioActual }) {
     }
   };
 
-  const renderTarjeta = (prod) => {
-    const enCarrito = carrito.includes(prod.codigo);
-    const enWishlist = wishlist.includes(prod.codigo);
-
-    return (
-      <div className="card" key={prod.codigo} onClick={() => setProductoModal(prod)}>
-        <div className="card-visual">
-          <button className={`btn-wishlist ${enWishlist ? 'active' : ''}`} onClick={(e) => alternarWishlist(e, prod.codigo)}>
-            <span className="material-symbols-outlined">star</span>
-          </button>
-          {prod.imagen ? (
-            <img src={prod.imagen} alt={prod.nombre} className="card-img" />
-          ) : (
-            <span className="card-icono">{prod.nombre.charAt(0).toUpperCase()}</span>
-          )}
-          <span className="card-codigo">{prod.codigo}</span>
-        </div>
-        <span className="card-categoria">{prod.categoria}</span>
-        <h3 className="card-titulo">{prod.nombre}</h3>
-        <p className="card-descripcion">{prod.descripcion}</p>
-        <hr className="card-divisor" />
-        <div className="card-footer">
-          <span className="card-precio">${prod.precio}</span>
-          <span className={`card-stock ${prod.stock <= 5 ? "stock-bajo" : ""}`}>
-            {prod.stock <= 0 ? "Agotado" : prod.stock <= 5 ? "¡Últimas unidades!" : `Stock: ${prod.stock}`}
-          </span>
-        </div>
-        <button
-          className={`btn-agregar ${enCarrito ? 'btn-agregado' : ''}`}
-          onClick={(e) => alternarCarrito(e, prod.codigo)}
-          disabled={!enCarrito && prod.stock <= 0}
-        >
-          {enCarrito ? 'Quitar del carrito' : prod.stock <= 0 ? 'Sin stock' : 'Agregar al carrito'}
-        </button>
-      </div>
-    );
-  };
+  const renderTarjeta = (prod) => (
+    <ProductoCard
+      key={prod.codigo}
+      producto={prod}
+      enCarrito={carrito.includes(prod.codigo)}
+      enWishlist={wishlist.includes(prod.codigo)}
+      onSelect={setProductoModal}
+      onAlternarCarrito={alternarCarrito}
+      onAlternarWishlist={alternarWishlist}
+    />
+  );
 
   const renderFila = (tituloTexto, listaProductos, enlaceVerMas) => (
     <div className="fila-categoria" key={tituloTexto}>
@@ -204,66 +181,16 @@ function Inicio({ usuarioActual }) {
         })}
       </div>
 
-      {productoModal && (
-        <>
-          <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1">
-            <div className="modal-dialog modal-dialog-centered modal-lg">
-              <div className="modal-content modal-content-custom bg-dark text-white">
-                <div className="modal-header border-secondary">
-                  <h5 className="modal-title text-amarillo fw-bold">{productoModal.nombre}</h5>
-                  <button type="button" className="btn-close btn-close-white" onClick={() => setProductoModal(null)}></button>
-                </div>
-                <div className="modal-body">
-                  <div className="row g-4">
-                    <div className="col-md-6">
-                      <div className="position-relative">
-                        <button className={`btn-wishlist ${wishlist.includes(productoModal.codigo) ? 'active' : ''}`} onClick={(e) => alternarWishlist(e, productoModal.codigo)}>
-                          <span className="material-symbols-outlined">star</span>
-                        </button>
-                        <div className="modal-img-producto">
-                          {productoModal.imagen ? (
-                            <img src={productoModal.imagen} alt={productoModal.nombre} />
-                          ) : (
-                            <span className="card-icono text-white">{productoModal.nombre.charAt(0).toUpperCase()}</span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-md-6 d-flex flex-column">
-                      <span className="card-categoria align-self-start">{productoModal.categoria}</span>
-                      <p className="mt-3 mb-1 small text-white"><span className="fw-bold">Código:</span> <span className="fw-normal">{productoModal.codigo}</span></p>
-                      <p className="mb-1 small text-white"><span className="fw-bold">Marca:</span> <span className="fw-normal">{productoModal.marca}</span></p>
-                      <p className="mb-3 small text-white"><span className="fw-bold">Modelo:</span> <span className="fw-normal">{productoModal.modelo}</span></p>
-                      <h4 className="text-amarillo fw-bold mb-3">${productoModal.precio}</h4>
-                      <p className="flex-grow-1">{productoModal.descripcion}</p>
-                      <div className="mt-auto">
-                        <p className={`small mb-2 ${productoModal.stock <= 5 ? "text-danger fw-bold" : ""}`}>
-                          {productoModal.stock <= 0 ? "Producto agotado" : `Stock disponible: ${productoModal.stock}`}
-                        </p>
-                        <button
-                          className={`btn-agregar w-100 ${carrito.includes(productoModal.codigo) ? 'btn-agregado' : ''}`}
-                          onClick={(e) => alternarCarrito(e, productoModal.codigo)}
-                          disabled={!carrito.includes(productoModal.codigo) && productoModal.stock <= 0}
-                        >
-                          {carrito.includes(productoModal.codigo) ? 'Quitar del carrito' : productoModal.stock <= 0 ? 'Sin stock' : 'Agregar al carrito'}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="modal-backdrop fade show"></div>
-        </>
-      )}
+      <ProductoModal
+        producto={productoModal}
+        enCarrito={productoModal ? carrito.includes(productoModal.codigo) : false}
+        enWishlist={productoModal ? wishlist.includes(productoModal.codigo) : false}
+        onCerrar={() => setProductoModal(null)}
+        onAlternarCarrito={alternarCarrito}
+        onAlternarWishlist={alternarWishlist}
+      />
 
-      <div className="toast-container-fixed">
-        <div className={`toast-custom d-flex align-items-center ${toast.visible ? 'show' : ''}`}>
-          <span className="material-symbols-outlined me-2 text-amarillo">info</span>
-          <span>{toast.mensaje}</span>
-        </div>
-      </div>
+      <ToastNotificacion toast={toast} />
     </>
   );
 }
