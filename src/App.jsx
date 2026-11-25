@@ -6,6 +6,7 @@ import { auth, db } from './firebase';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import CargandoBox from './components/CargandoBox';
 import Inicio from './pages/Inicio';
 import Catalogo from './pages/Catalogo';
 import Cart from './pages/Cart';
@@ -21,6 +22,7 @@ import Categorias from './pages/Categorias';
 function App() {
   const [usuarioActual, setUsuarioActual] = useState(null);
   const [rol, setRol] = useState("cliente");
+  const [cargandoSesion, setCargandoSesion] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -30,6 +32,8 @@ function App() {
             const docSnap = await getDoc(doc(db, "usuarios", user.uid));
             if (docSnap.exists()) {
                 setRol(docSnap.data().rol || "cliente");
+            } else {
+                setRol("cliente");
             }
         } catch (error) {
             console.error(error);
@@ -38,6 +42,7 @@ function App() {
         setUsuarioActual(null);
         setRol("cliente");
       }
+      setCargandoSesion(false);
     });
 
     return () => unsubscribe();
@@ -47,21 +52,27 @@ function App() {
     <>
       <Navbar usuarioActual={usuarioActual} rol={rol} />
       <main className="flex-grow-1">
-        <Routes>
-          <Route path="/" element={<Inicio usuarioActual={usuarioActual} />} />
-          <Route path="/catalogo" element={<Catalogo usuarioActual={usuarioActual} />} />
-          <Route path="/cart" element={<Cart usuarioActual={usuarioActual} />} />
-          <Route path="/checkout" element={<Checkout usuarioActual={usuarioActual} />} />
-          <Route path="/pago-exitoso" element={<PagoExitoso />} />
-          <Route path="/pago-exitoso/:idPedido" element={<PagoExitoso />} />
-          <Route path="/pago-error" element={<PagoError />} />
-          <Route path="/ofertas" element={<Ofertas usuarioActual={usuarioActual} />} />
-          <Route path="/categorias-grid" element={<Categorias />} />
-          <Route path="/admin" element={<Admin usuarioActual={usuarioActual} rol={rol} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/contacto" element={<Contacto />} />
-          <Route path="*" element={<h2 className="text-center mt-5 text-white">Página no encontrada</h2>} />
-        </Routes>
+        {cargandoSesion ? (
+          <div className="contenedor-principal">
+            <CargandoBox texto="Verificando sesión..." />
+          </div>
+        ) : (
+          <Routes>
+            <Route path="/" element={<Inicio usuarioActual={usuarioActual} />} />
+            <Route path="/catalogo" element={<Catalogo usuarioActual={usuarioActual} />} />
+            <Route path="/cart" element={<Cart usuarioActual={usuarioActual} />} />
+            <Route path="/checkout" element={<Checkout usuarioActual={usuarioActual} />} />
+            <Route path="/pago-exitoso" element={<PagoExitoso />} />
+            <Route path="/pago-exitoso/:idPedido" element={<PagoExitoso />} />
+            <Route path="/pago-error" element={<PagoError />} />
+            <Route path="/ofertas" element={<Ofertas usuarioActual={usuarioActual} />} />
+            <Route path="/categorias-grid" element={<Categorias />} />
+            <Route path="/admin" element={<Admin usuarioActual={usuarioActual} rol={rol} />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/contacto" element={<Contacto />} />
+            <Route path="*" element={<h2 className="text-center mt-5 text-white">Página no encontrada</h2>} />
+          </Routes>
+        )}
       </main>
       <Footer />
     </>
